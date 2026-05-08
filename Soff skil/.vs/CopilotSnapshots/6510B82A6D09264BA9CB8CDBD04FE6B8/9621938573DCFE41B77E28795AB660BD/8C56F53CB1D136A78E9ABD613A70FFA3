@@ -1,0 +1,320 @@
+﻿using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
+using Soff_skil.Data;
+using Soff_skil.DTOs;
+using Soff_skil.Models;
+using System.Globalization;
+
+namespace Soff_skil.Services;
+
+public class AdminService : IAdminService
+{
+    private readonly ApplicationDbContext _dbContext;
+    private readonly ISoftSkillService _softSkillService;
+
+    public AdminService(ApplicationDbContext dbContext, ISoftSkillService softSkillService)
+    {
+        _dbContext = dbContext;
+        _softSkillService = softSkillService;
+    }
+
+    public async Task<ImportExcelResponseDto> ImportExcelAsync(IFormFile file, CancellationToken cancellationToken = default)
+    {
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+        using var stream = new MemoryStream();
+        await file.CopyToAsync(stream, cancellationToken);
+        stream.Position = 0;
+
+        using var package = new ExcelPackage(stream);
+        var worksheet = package.Workbook.Worksheets.FirstOrDefault();
+
+        if (worksheet == null || worksheet.Dimension == null)
+        {
+            return new ImportExcelResponseDto
+            {
+                ImportedCount = 0,
+                SkippedCount = 1,
+                Errors = new List<string> { "Excel empty" }
+            };
+        }
+
+        int imported = 0;
+        int skipped = 0;
+        var errors = new List<string>();
+
+        for (int row = 2; row <= worksheet.Dimension.End.Row; row++)
+        {
+            try
+            {
+                var studentCode = worksheet.Cells[row, 1].Text?.Trim();
+                var studentName = worksheet.Cells[row, 2].Text?.Trim();
+                var classCode = worksheet.Cells[row, 3].Text?.Trim();
+                var teacherName = worksheet.Cells[row, 4].Text?.Trim();
+
+                if (string.IsNullOrWhiteSpace(studentCode) ||
+                    string.IsNullOrWhiteSpace(studentName) ||
+                    string.IsNullOrWhiteSpace(classCode) ||
+                    string.IsNullOrWhiteSpace(teacherName))
+                {
+                    skipped++;
+                    errors.Add($"Row {row}: Missing data");
+                    continue;
+                }
+
+                var classroom = await _dbContext.Classes
+                    .Include(c => c.Teacher)
+                    .SingleOrDefaultAsync(c => c.Code == classCode, cancellationToken);
+
+                if (classroom == null)
+                {
+                    skipped++;
+                    errors.Add($"Row {row}: Class {classCode} does not exist.");
+                    continue;
+                }
+
+                if (!string.Equals(classroom.Teacher?.Name, teacherName, StringComparison.OrdinalIgnoreCase))
+                {
+                    skipped++;
+                    errors.Add($"Row {row}: Teacher {teacherName} is not assigned to class {classCode}.");
+                    continue;
+                }
+
+                var attendance = ParseScore(row, 5, worksheet);
+                var assignment = ParseScore(row, 6, worksheet);
+                var presentation = ParseScore(row, 7, worksheet);
+                var project = ParseScore(row, 8, worksheet);
+                var peerReview = ParseScore(row, 9, worksheet);
+
+                if (attendance == null || assignment == null || presentation == null || project == null || peerReview == null)
+                {
+                    skipped++;
+                    errors.Add($"Row {row}: One or more scores are invalid.");
+                    continue;
+                }
+
+                var user = await _dbContext.Users.SingleOrDefaultAsync(x => x.Username == studentCode, cancellationToken);
+                if (user == null)
+                {
+                    user = new User
+                    {
+                        Username = studentCode,
+                        Password = PasswordHasher.HashPassword(studentCode),
+                        Role = "student"
+                    };
+                    _dbContext.Users.Add(user);
+                    await _dbContext.SaveChangesAsync(cancellationToken);
+                }
+
+                var student = await _dbContext.Students.SingleOrDefaultAsync(x => x.UserId == user.Id, cancellationToken);
+                if (student == null)
+                {
+                    student = new Student();
+                    _dbContext.Students.Add(student);
+                }
+
+                student.Name = studentName;
+                student.UserId = user.Id;
+                student.TeacherId = classroom.TeacherId;
+                student.ClassCode = classCode;
+                await _dbContext.SaveChangesAsync(cancellationToken);
+
+                var evaluationRequest = new EvaluationCreateRequestDto
+                {
+                    StudentId = student.Id,
+                    EvaluatorId = classroom.TeacherId,
+                    EvaluatorType = "system",
+                    WeekNumber = ISOWeek.GetWeekOfYear(DateTime.UtcNow),
+                    EvaluationDate = DateTime.UtcNow,
+                    TeacherComment = "Imported from Excel",
+                    Attendance = attendance.Value,
+                    Assignment = assignment.Value,
+                    Presentation = presentation.Value,
+                    Project = project.Value,
+                    PeerReview = peerReview.Value,
+                    TeamContribution = peerReview.Value
+                };
+
+                await _softSkillService.CreateEvaluationAsync(evaluationRequest, cancellationToken);
+
+                imported++;
+            }
+            catch (Exception ex)
+            {
+                skipped++;
+                errors.Add($"Row {row}: {ex.InnerException?.Message ?? ex.Message}");
+            }
+        }
+
+        return new ImportExcelResponseDto
+        {
+            ImportedCount = imported,
+            SkippedCount = skipped,
+            Errors = errors
+        };
+    }
+
+    public async Task<ClassroomSummaryDto> CreateClassroomAsync(ManageClassroomRequestDto request, CancellationToken cancellationToken = default)
+    {
+        var code = request.Code.Trim();
+        var name = request.Name.Trim();
+        var teacher = await _dbContext.Teachers.SingleOrDefaultAsync(t => t.Id == request.TeacherId, cancellationToken)
+            ?? throw new InvalidOperationException($"Teacher {request.TeacherId} was not found.");
+
+        var exists = await _dbContext.Classes.AnyAsync(c => c.Code == code, cancellationToken);
+        if (exists)
+        {
+            throw new InvalidOperationException($"Class {code} already exists.");
+        }
+
+        var classroom = new Classroom
+        {
+            Name = name,
+            Code = code,
+            TeacherId = teacher.Id
+        };
+
+        _dbContext.Classes.Add(classroom);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+        return await MapClassroomAsync(classroom.Id, cancellationToken);
+    }
+
+    public async Task<ClassroomSummaryDto> UpdateClassroomAsync(int classId, ManageClassroomRequestDto request, CancellationToken cancellationToken = default)
+    {
+        var classroom = await _dbContext.Classes.SingleOrDefaultAsync(c => c.Id == classId, cancellationToken)
+            ?? throw new InvalidOperationException($"Classroom {classId} was not found.");
+
+        var teacher = await _dbContext.Teachers.SingleOrDefaultAsync(t => t.Id == request.TeacherId, cancellationToken)
+            ?? throw new InvalidOperationException($"Teacher {request.TeacherId} was not found.");
+
+        classroom.Name = request.Name.Trim();
+        classroom.Code = request.Code.Trim();
+        classroom.TeacherId = teacher.Id;
+
+        await _dbContext.SaveChangesAsync(cancellationToken);
+        await SyncStudentTeacherByClassCodeAsync(classroom.Code, classroom.TeacherId, cancellationToken);
+
+        return await MapClassroomAsync(classroom.Id, cancellationToken);
+    }
+
+    public async Task<ClassroomSummaryDto> ReassignTeacherAsync(int classId, ReassignClassroomTeacherRequestDto request, CancellationToken cancellationToken = default)
+    {
+        var classroom = await _dbContext.Classes.SingleOrDefaultAsync(c => c.Id == classId, cancellationToken)
+            ?? throw new InvalidOperationException($"Classroom {classId} was not found.");
+
+        var teacher = await _dbContext.Teachers.SingleOrDefaultAsync(t => t.Id == request.TeacherId, cancellationToken)
+            ?? throw new InvalidOperationException($"Teacher {request.TeacherId} was not found.");
+
+        classroom.TeacherId = teacher.Id;
+        await _dbContext.SaveChangesAsync(cancellationToken);
+        await SyncStudentTeacherByClassCodeAsync(classroom.Code, classroom.TeacherId, cancellationToken);
+
+        return await MapClassroomAsync(classId, cancellationToken);
+    }
+
+    public async Task<IReadOnlyList<ClassroomSummaryDto>> GetClassroomsAsync(CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.Classes
+            .AsNoTracking()
+            .Include(c => c.Teacher)
+            .Select(c => new ClassroomSummaryDto
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Code = c.Code,
+                TeacherId = c.TeacherId,
+                TeacherName = c.Teacher != null ? c.Teacher.Name : string.Empty,
+                StudentCount = c.Students.Count
+            })
+            .OrderBy(c => c.Code)
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task<IReadOnlyList<AdminAccountOptionDto>> GetTeachersAsync(CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.Teachers
+            .AsNoTracking()
+            .GroupJoin(
+                _dbContext.Users.AsNoTracking(),
+                teacher => teacher.UserId,
+                user => (int?)user.Id,
+                (teacher, users) => new { teacher, user = users.FirstOrDefault() })
+            .Select(x => new AdminAccountOptionDto
+            {
+                Id = x.teacher.Id,
+                Name = x.teacher.Name,
+                Email = x.teacher.Email,
+                Username = x.user != null ? x.user.Username : string.Empty
+            })
+            .OrderBy(x => x.Name)
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task<IReadOnlyList<AdminAccountOptionDto>> GetStudentsAsync(CancellationToken cancellationToken = default)
+    {
+        return await _dbContext.Students
+            .AsNoTracking()
+            .GroupJoin(
+                _dbContext.Users.AsNoTracking(),
+                student => student.UserId,
+                user => user.Id,
+                (student, users) => new { student, user = users.FirstOrDefault() })
+            .Select(x => new AdminAccountOptionDto
+            {
+                Id = x.student.Id,
+                Name = x.student.Name,
+                ClassCode = x.student.ClassCode,
+                Username = x.user != null ? x.user.Username : string.Empty
+            })
+            .OrderBy(x => x.Name)
+            .ToListAsync(cancellationToken);
+    }
+
+    private async Task<ClassroomSummaryDto> MapClassroomAsync(int classId, CancellationToken cancellationToken)
+    {
+        return await _dbContext.Classes
+            .AsNoTracking()
+            .Include(c => c.Teacher)
+            .Where(c => c.Id == classId)
+            .Select(c => new ClassroomSummaryDto
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Code = c.Code,
+                TeacherId = c.TeacherId,
+                TeacherName = c.Teacher != null ? c.Teacher.Name : string.Empty,
+                StudentCount = c.Students.Count
+            })
+            .SingleAsync(cancellationToken);
+    }
+
+    private async Task SyncStudentTeacherByClassCodeAsync(string classCode, int teacherId, CancellationToken cancellationToken)
+    {
+        var students = await _dbContext.Students.Where(s => s.ClassCode == classCode).ToListAsync(cancellationToken);
+        foreach (var student in students)
+        {
+            student.TeacherId = teacherId;
+        }
+
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    private static double? ParseScore(int row, int column, ExcelWorksheet worksheet)
+    {
+        var raw = worksheet.Cells[row, column].Text?.Trim();
+        if (!double.TryParse(raw, out var score))
+        {
+            return null;
+        }
+
+        return score switch
+        {
+            < 0 => null,
+            <= 1 => score * 10,
+            <= 10 => score,
+            <= 100 => score / 10,
+            _ => null
+        };
+    }
+}

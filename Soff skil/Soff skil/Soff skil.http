@@ -1,0 +1,6 @@
+@Soff_skil_HostAddress = http://localhost:5025
+
+GET {{Soff_skil_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

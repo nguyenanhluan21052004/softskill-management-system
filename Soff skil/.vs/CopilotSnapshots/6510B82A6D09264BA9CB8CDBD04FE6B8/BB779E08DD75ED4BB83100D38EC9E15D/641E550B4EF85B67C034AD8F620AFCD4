@@ -1,0 +1,18 @@
+﻿using Soff_skil.DTOs;
+
+namespace Soff_skil.Services;
+
+public interface ISoftSkillService
+{
+    Task<IReadOnlyList<SoftSkillResultDto>> GetResultsAsync(CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<SoftSkillResultDto>> GetTopResultsAsync(int limit, CancellationToken cancellationToken = default);
+    Task<SoftSkillStatisticsDto> GetStatisticsAsync(CancellationToken cancellationToken = default);
+    Task<EvaluationCreateResponseDto> CreateEvaluationAsync(
+        EvaluationCreateRequestDto request,
+        CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<CreateEvaluationDto>> GetEvaluationsByStudentAsync(int studentId, CancellationToken cancellationToken = default);
+    Task<StudentProgressDto?> GetStudentProgressAsync(int studentId, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<RecommendationDto>> GetRecommendationsAsync(int studentId, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<StudentProgressDto>> GetTopStudentsAsync(int limit, CancellationToken cancellationToken = default);
+    Task<IReadOnlyList<StudentProgressDto>> GetAtRiskStudentsAsync(int limit, CancellationToken cancellationToken = default);
+}

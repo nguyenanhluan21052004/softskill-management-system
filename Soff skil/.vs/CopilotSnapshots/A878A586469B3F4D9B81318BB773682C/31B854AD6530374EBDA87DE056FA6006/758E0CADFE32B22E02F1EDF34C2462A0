@@ -1,0 +1,91 @@
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Soff_skil.Data;
+
+public static class LegacySchemaPatcher
+{
+    public static async Task PatchAsync(ApplicationDbContext dbContext, ILogger logger, CancellationToken cancellationToken = default)
+    {
+        var commands = new[]
+        {
+            "IF OBJECT_ID(N'teachers', N'U') IS NOT NULL AND COL_LENGTH('teachers', 'user_id') IS NULL ALTER TABLE teachers ADD user_id INT NULL;",
+            "IF OBJECT_ID(N'teachers', N'U') IS NOT NULL AND COL_LENGTH('teachers', 'UserId') IS NOT NULL AND COL_LENGTH('teachers', 'user_id') IS NOT NULL BEGIN EXEC('UPDATE teachers SET user_id = UserId WHERE UserId IS NOT NULL AND (user_id IS NULL OR user_id = 0 OR user_id <> UserId)'); END;",
+            "IF OBJECT_ID(N'students', N'U') IS NOT NULL AND COL_LENGTH('students', 'class_code') IS NULL ALTER TABLE students ADD class_code NVARCHAR(20) NULL;",
+            "IF OBJECT_ID(N'students', N'U') IS NOT NULL AND COL_LENGTH('students', 'teacher_id') IS NULL ALTER TABLE students ADD teacher_id INT NULL;",
+            "IF OBJECT_ID(N'IX_students_class_code', N'IX') IS NOT NULL DROP INDEX IX_students_class_code ON students;",
+            "IF OBJECT_ID(N'students', N'U') IS NOT NULL AND COL_LENGTH('students', 'ClassCode') IS NOT NULL AND COL_LENGTH('students', 'class_code') IS NOT NULL BEGIN EXEC('UPDATE students SET class_code = ClassCode WHERE ClassCode IS NOT NULL AND (class_code IS NULL OR class_code <> ClassCode)'); END;",
+            "IF OBJECT_ID(N'students', N'U') IS NOT NULL AND COL_LENGTH('students', 'TeacherId') IS NOT NULL AND COL_LENGTH('students', 'teacher_id') IS NOT NULL BEGIN EXEC('UPDATE students SET teacher_id = TeacherId WHERE TeacherId IS NOT NULL AND (teacher_id IS NULL OR teacher_id = 0 OR teacher_id <> TeacherId)'); END;",
+            "IF OBJECT_ID(N'students', N'U') IS NOT NULL AND COL_LENGTH('students', 'UserId') IS NOT NULL AND COL_LENGTH('students', 'user_id') IS NOT NULL BEGIN EXEC('UPDATE students SET user_id = UserId WHERE UserId IS NOT NULL AND (user_id IS NULL OR user_id = 0 OR user_id <> UserId)'); END;",
+
+            "IF OBJECT_ID(N'soft_skill_result', N'U') IS NOT NULL AND COL_LENGTH('soft_skill_result', 'communication') IS NULL ALTER TABLE soft_skill_result ADD communication FLOAT NOT NULL CONSTRAINT DF_soft_skill_result_communication DEFAULT (0);",
+            "IF OBJECT_ID(N'soft_skill_result', N'U') IS NOT NULL AND COL_LENGTH('soft_skill_result', 'teamwork') IS NULL ALTER TABLE soft_skill_result ADD teamwork FLOAT NOT NULL CONSTRAINT DF_soft_skill_result_teamwork DEFAULT (0);",
+            "IF OBJECT_ID(N'soft_skill_result', N'U') IS NOT NULL AND COL_LENGTH('soft_skill_result', 'critical_thinking') IS NULL ALTER TABLE soft_skill_result ADD critical_thinking FLOAT NOT NULL CONSTRAINT DF_soft_skill_result_critical_thinking DEFAULT (0);",
+            "IF OBJECT_ID(N'soft_skill_result', N'U') IS NOT NULL AND COL_LENGTH('soft_skill_result', 'time_management') IS NULL ALTER TABLE soft_skill_result ADD time_management FLOAT NOT NULL CONSTRAINT DF_soft_skill_result_time_management DEFAULT (0);",
+            "IF OBJECT_ID(N'soft_skill_result', N'U') IS NOT NULL AND COL_LENGTH('soft_skill_result', 'participation_rate') IS NULL ALTER TABLE soft_skill_result ADD participation_rate FLOAT NOT NULL CONSTRAINT DF_soft_skill_result_participation_rate DEFAULT (0);",
+            "IF OBJECT_ID(N'soft_skill_result', N'U') IS NOT NULL AND COL_LENGTH('soft_skill_result', 'contribution_rate') IS NULL ALTER TABLE soft_skill_result ADD contribution_rate FLOAT NOT NULL CONSTRAINT DF_soft_skill_result_contribution_rate DEFAULT (0);",
+            "IF OBJECT_ID(N'soft_skill_result', N'U') IS NOT NULL AND COL_LENGTH('soft_skill_result', 'on_time_rate') IS NULL ALTER TABLE soft_skill_result ADD on_time_rate FLOAT NOT NULL CONSTRAINT DF_soft_skill_result_on_time_rate DEFAULT (0);",
+
+            "IF OBJECT_ID(N'soft_skill_result', N'U') IS NOT NULL UPDATE s SET communication = CASE WHEN communication = 0 AND score > 0 THEN score ELSE communication END, teamwork = CASE WHEN teamwork = 0 AND score > 0 THEN score ELSE teamwork END, critical_thinking = CASE WHEN critical_thinking = 0 AND score > 0 THEN score ELSE critical_thinking END, time_management = CASE WHEN time_management = 0 AND score > 0 THEN score ELSE time_management END, participation_rate = CASE WHEN participation_rate = 0 AND score > 0 THEN 70 ELSE participation_rate END, contribution_rate = CASE WHEN contribution_rate = 0 AND score > 0 THEN 70 ELSE contribution_rate END, on_time_rate = CASE WHEN on_time_rate = 0 AND score > 0 THEN 70 ELSE on_time_rate END FROM soft_skill_result s;",
+
+            "IF OBJECT_ID(N'progress_tracking', N'U') IS NOT NULL AND COL_LENGTH('progress_tracking', 'progress_id') IS NULL ALTER TABLE progress_tracking ADD progress_id INT IDENTITY(1,1) NOT NULL;",
+            "IF OBJECT_ID(N'progress_tracking', N'U') IS NOT NULL AND COL_LENGTH('progress_tracking', 'student_id') IS NULL ALTER TABLE progress_tracking ADD student_id INT NULL;",
+            "IF OBJECT_ID(N'progress_tracking', N'U') IS NOT NULL AND COL_LENGTH('progress_tracking', 'week_number') IS NULL ALTER TABLE progress_tracking ADD week_number INT NULL;",
+            "IF OBJECT_ID(N'progress_tracking', N'U') IS NOT NULL AND COL_LENGTH('progress_tracking', 'total_score') IS NULL ALTER TABLE progress_tracking ADD total_score FLOAT NOT NULL CONSTRAINT DF_progress_tracking_total_score DEFAULT (0);",
+            "IF OBJECT_ID(N'progress_tracking', N'U') IS NOT NULL AND COL_LENGTH('progress_tracking', 'alert_flag') IS NULL ALTER TABLE progress_tracking ADD alert_flag BIT NOT NULL CONSTRAINT DF_progress_tracking_alert_flag DEFAULT (0);",
+            "IF OBJECT_ID(N'progress_tracking', N'U') IS NOT NULL AND COL_LENGTH('progress_tracking', 'rank') IS NULL ALTER TABLE progress_tracking ADD rank INT NOT NULL CONSTRAINT DF_progress_tracking_rank DEFAULT (0);",
+            "IF OBJECT_ID(N'progress_tracking', N'U') IS NOT NULL AND COL_LENGTH('progress_tracking', 'updated_at') IS NULL ALTER TABLE progress_tracking ADD updated_at DATETIME2 NULL;",
+            "IF OBJECT_ID(N'progress_tracking', N'U') IS NOT NULL AND COL_LENGTH('progress_tracking', 'StudentId') IS NOT NULL AND COL_LENGTH('progress_tracking', 'student_id') IS NOT NULL BEGIN EXEC('UPDATE progress_tracking SET student_id = StudentId WHERE StudentId IS NOT NULL AND (student_id IS NULL OR student_id = 0 OR student_id <> StudentId)'); END;",
+            "IF OBJECT_ID(N'progress_tracking', N'U') IS NOT NULL AND COL_LENGTH('progress_tracking', 'WeekNumber') IS NOT NULL AND COL_LENGTH('progress_tracking', 'week_number') IS NOT NULL BEGIN EXEC('UPDATE progress_tracking SET week_number = WeekNumber WHERE WeekNumber IS NOT NULL AND (week_number IS NULL OR week_number <> WeekNumber)'); END;",
+            "IF OBJECT_ID(N'progress_tracking', N'U') IS NOT NULL AND COL_LENGTH('progress_tracking', 'TotalScore') IS NOT NULL AND COL_LENGTH('progress_tracking', 'total_score') IS NOT NULL BEGIN EXEC('UPDATE progress_tracking SET total_score = TotalScore WHERE TotalScore IS NOT NULL AND total_score <> TotalScore'); END;",
+            "IF OBJECT_ID(N'progress_tracking', N'U') IS NOT NULL AND COL_LENGTH('progress_tracking', 'AlertFlag') IS NOT NULL AND COL_LENGTH('progress_tracking', 'alert_flag') IS NOT NULL BEGIN EXEC('UPDATE progress_tracking SET alert_flag = AlertFlag WHERE AlertFlag IS NOT NULL AND alert_flag <> AlertFlag'); END;",
+            "IF OBJECT_ID(N'progress_tracking', N'U') IS NOT NULL AND COL_LENGTH('progress_tracking', 'Rank') IS NOT NULL AND COL_LENGTH('progress_tracking', 'rank') IS NOT NULL BEGIN EXEC('UPDATE progress_tracking SET rank = Rank WHERE Rank IS NOT NULL AND rank <> Rank'); END;",
+            "IF OBJECT_ID(N'progress_tracking', N'U') IS NOT NULL AND COL_LENGTH('progress_tracking', 'UpdatedAt') IS NOT NULL AND COL_LENGTH('progress_tracking', 'updated_at') IS NOT NULL BEGIN EXEC('UPDATE progress_tracking SET updated_at = UpdatedAt WHERE UpdatedAt IS NOT NULL AND (updated_at IS NULL OR updated_at <> UpdatedAt)'); END;",
+
+            "IF OBJECT_ID(N'evaluations', N'U') IS NOT NULL AND COL_LENGTH('evaluations', 'evaluation_id') IS NULL ALTER TABLE evaluations ADD evaluation_id INT IDENTITY(1,1) NOT NULL;",
+            "IF OBJECT_ID(N'evaluations', N'U') IS NOT NULL AND COL_LENGTH('evaluations', 'student_id') IS NULL ALTER TABLE evaluations ADD student_id INT NULL;",
+            "IF OBJECT_ID(N'evaluations', N'U') IS NOT NULL AND COL_LENGTH('evaluations', 'evaluator_id') IS NULL ALTER TABLE evaluations ADD evaluator_id INT NULL;",
+            "IF OBJECT_ID(N'evaluations', N'U') IS NOT NULL AND COL_LENGTH('evaluations', 'evaluator_type') IS NULL ALTER TABLE evaluations ADD evaluator_type NVARCHAR(50) NULL;",
+            "IF OBJECT_ID(N'evaluations', N'U') IS NOT NULL AND COL_LENGTH('evaluations', 'week_number') IS NULL ALTER TABLE evaluations ADD week_number INT NULL;",
+            "IF OBJECT_ID(N'evaluations', N'U') IS NOT NULL AND COL_LENGTH('evaluations', 'evaluation_date') IS NULL ALTER TABLE evaluations ADD evaluation_date DATETIME2 NULL;",
+            "IF OBJECT_ID(N'evaluations', N'U') IS NOT NULL AND COL_LENGTH('evaluations', 'comment') IS NULL ALTER TABLE evaluations ADD comment NVARCHAR(MAX) NULL;",
+            "IF OBJECT_ID(N'evaluations', N'U') IS NOT NULL AND COL_LENGTH('evaluations', 'StudentId') IS NOT NULL AND COL_LENGTH('evaluations', 'student_id') IS NOT NULL BEGIN EXEC('UPDATE evaluations SET student_id = StudentId WHERE StudentId IS NOT NULL AND (student_id IS NULL OR student_id = 0 OR student_id <> StudentId)'); END;",
+            "IF OBJECT_ID(N'evaluations', N'U') IS NOT NULL AND COL_LENGTH('evaluations', 'EvaluatorId') IS NOT NULL AND COL_LENGTH('evaluations', 'evaluator_id') IS NOT NULL BEGIN EXEC('UPDATE evaluations SET evaluator_id = EvaluatorId WHERE EvaluatorId IS NOT NULL AND (evaluator_id IS NULL OR evaluator_id = 0 OR evaluator_id <> EvaluatorId)'); END;",
+            "IF OBJECT_ID(N'evaluations', N'U') IS NOT NULL AND COL_LENGTH('evaluations', 'EvaluatorType') IS NOT NULL AND COL_LENGTH('evaluations', 'evaluator_type') IS NOT NULL BEGIN EXEC('UPDATE evaluations SET evaluator_type = EvaluatorType WHERE EvaluatorType IS NOT NULL AND (evaluator_type IS NULL OR evaluator_type <> EvaluatorType)'); END;",
+            "IF OBJECT_ID(N'evaluations', N'U') IS NOT NULL AND COL_LENGTH('evaluations', 'WeekNumber') IS NOT NULL AND COL_LENGTH('evaluations', 'week_number') IS NOT NULL BEGIN EXEC('UPDATE evaluations SET week_number = WeekNumber WHERE WeekNumber IS NOT NULL AND (week_number IS NULL OR week_number <> WeekNumber)'); END;",
+            "IF OBJECT_ID(N'evaluations', N'U') IS NOT NULL AND COL_LENGTH('evaluations', 'EvaluationDate') IS NOT NULL AND COL_LENGTH('evaluations', 'evaluation_date') IS NOT NULL BEGIN EXEC('UPDATE evaluations SET evaluation_date = EvaluationDate WHERE EvaluationDate IS NOT NULL AND (evaluation_date IS NULL OR evaluation_date <> EvaluationDate)'); END;",
+            "IF OBJECT_ID(N'evaluations', N'U') IS NOT NULL AND COL_LENGTH('evaluations', 'Comment') IS NOT NULL AND COL_LENGTH('evaluations', 'comment') IS NOT NULL BEGIN EXEC('UPDATE evaluations SET comment = Comment WHERE Comment IS NOT NULL AND (comment IS NULL OR comment <> Comment)'); END;",
+
+            "IF OBJECT_ID(N'evaluation_details', N'U') IS NOT NULL AND COL_LENGTH('evaluation_details', 'detail_id') IS NULL ALTER TABLE evaluation_details ADD detail_id INT IDENTITY(1,1) NOT NULL;",
+            "IF OBJECT_ID(N'evaluation_details', N'U') IS NOT NULL AND COL_LENGTH('evaluation_details', 'evaluation_id') IS NULL ALTER TABLE evaluation_details ADD evaluation_id INT NULL;",
+            "IF OBJECT_ID(N'evaluation_details', N'U') IS NOT NULL AND COL_LENGTH('evaluation_details', 'skill_type') IS NULL ALTER TABLE evaluation_details ADD skill_type NVARCHAR(100) NULL;",
+            "IF OBJECT_ID(N'evaluation_details', N'U') IS NOT NULL AND COL_LENGTH('evaluation_details', 'score') IS NULL ALTER TABLE evaluation_details ADD score FLOAT NOT NULL CONSTRAINT DF_evaluation_details_score DEFAULT (0);",
+            "IF OBJECT_ID(N'evaluation_details', N'U') IS NOT NULL AND COL_LENGTH('evaluation_details', 'weight') IS NULL ALTER TABLE evaluation_details ADD weight FLOAT NOT NULL CONSTRAINT DF_evaluation_details_weight DEFAULT (1);",
+            "IF OBJECT_ID(N'evaluation_details', N'U') IS NOT NULL AND COL_LENGTH('evaluation_details', 'comment') IS NULL ALTER TABLE evaluation_details ADD comment NVARCHAR(MAX) NULL;",
+            "IF OBJECT_ID(N'evaluation_details', N'U') IS NOT NULL AND COL_LENGTH('evaluation_details', 'EvaluationId') IS NOT NULL AND COL_LENGTH('evaluation_details', 'evaluation_id') IS NOT NULL BEGIN EXEC('UPDATE evaluation_details SET evaluation_id = EvaluationId WHERE EvaluationId IS NOT NULL AND (evaluation_id IS NULL OR evaluation_id = 0 OR evaluation_id <> EvaluationId)'); END;",
+            "IF OBJECT_ID(N'evaluation_details', N'U') IS NOT NULL AND COL_LENGTH('evaluation_details', 'SkillType') IS NOT NULL AND COL_LENGTH('evaluation_details', 'skill_type') IS NOT NULL BEGIN EXEC('UPDATE evaluation_details SET skill_type = SkillType WHERE SkillType IS NOT NULL AND (skill_type IS NULL OR skill_type <> SkillType)'); END;",
+            "IF OBJECT_ID(N'evaluation_details', N'U') IS NOT NULL AND COL_LENGTH('evaluation_details', 'Score') IS NOT NULL AND COL_LENGTH('evaluation_details', 'score') IS NOT NULL BEGIN EXEC('UPDATE evaluation_details SET score = Score WHERE Score IS NOT NULL AND score <> Score'); END;",
+            "IF OBJECT_ID(N'evaluation_details', N'U') IS NOT NULL AND COL_LENGTH('evaluation_details', 'Weight') IS NOT NULL AND COL_LENGTH('evaluation_details', 'weight') IS NOT NULL BEGIN EXEC('UPDATE evaluation_details SET weight = Weight WHERE Weight IS NOT NULL AND weight <> Weight'); END;",
+            "IF OBJECT_ID(N'evaluation_details', N'U') IS NOT NULL AND COL_LENGTH('evaluation_details', 'Comment') IS NOT NULL AND COL_LENGTH('evaluation_details', 'comment') IS NOT NULL BEGIN EXEC('UPDATE evaluation_details SET comment = Comment WHERE Comment IS NOT NULL AND (comment IS NULL OR comment <> Comment)'); END;",
+
+            "IF OBJECT_ID(N'recommendations', N'U') IS NOT NULL AND COL_LENGTH('recommendations', 'recommendation_id') IS NULL ALTER TABLE recommendations ADD recommendation_id INT IDENTITY(1,1) NOT NULL;",
+            "IF OBJECT_ID(N'recommendations', N'U') IS NOT NULL AND COL_LENGTH('recommendations', 'student_id') IS NULL ALTER TABLE recommendations ADD student_id INT NULL;",
+            "IF OBJECT_ID(N'recommendations', N'U') IS NOT NULL AND COL_LENGTH('recommendations', 'skill_type') IS NULL ALTER TABLE recommendations ADD skill_type NVARCHAR(100) NULL;",
+            "IF OBJECT_ID(N'recommendations', N'U') IS NOT NULL AND COL_LENGTH('recommendations', 'suggestion') IS NULL ALTER TABLE recommendations ADD suggestion NVARCHAR(MAX) NULL;",
+            "IF OBJECT_ID(N'recommendations', N'U') IS NOT NULL AND COL_LENGTH('recommendations', 'created_at') IS NULL ALTER TABLE recommendations ADD created_at DATETIME2 NULL;",
+            "IF OBJECT_ID(N'recommendations', N'U') IS NOT NULL AND COL_LENGTH('recommendations', 'StudentId') IS NOT NULL AND COL_LENGTH('recommendations', 'student_id') IS NOT NULL BEGIN EXEC('UPDATE recommendations SET student_id = StudentId WHERE StudentId IS NOT NULL AND (student_id IS NULL OR student_id = 0 OR student_id <> StudentId)'); END;",
+            "IF OBJECT_ID(N'recommendations', N'U') IS NOT NULL AND COL_LENGTH('recommendations', 'SkillType') IS NOT NULL AND COL_LENGTH('recommendations', 'skill_type') IS NOT NULL BEGIN EXEC('UPDATE recommendations SET skill_type = SkillType WHERE SkillType IS NOT NULL AND (skill_type IS NULL OR skill_type <> SkillType)'); END;",
+            "IF OBJECT_ID(N'recommendations', N'U') IS NOT NULL AND COL_LENGTH('recommendations', 'Suggestion') IS NOT NULL AND COL_LENGTH('recommendations', 'suggestion') IS NOT NULL BEGIN EXEC('UPDATE recommendations SET suggestion = Suggestion WHERE Suggestion IS NOT NULL AND (suggestion IS NULL OR suggestion <> Suggestion)'); END;",
+            "IF OBJECT_ID(N'recommendations', N'U') IS NOT NULL AND COL_LENGTH('recommendations', 'CreatedAt') IS NOT NULL AND COL_LENGTH('recommendations', 'created_at') IS NOT NULL BEGIN EXEC('UPDATE recommendations SET created_at = CreatedAt WHERE CreatedAt IS NOT NULL AND (created_at IS NULL OR created_at <> CreatedAt)'); END;",
+
+            "IF OBJECT_ID(N'users', N'U') IS NOT NULL AND OBJECT_ID(N'teachers', N'U') IS NOT NULL AND COL_LENGTH('teachers', 'user_id') IS NOT NULL BEGIN DECLARE @TeacherUserId INT = (SELECT TOP (1) id FROM users WHERE role IN ('teacher', 'Teacher') ORDER BY id); IF @TeacherUserId IS NOT NULL UPDATE teachers SET user_id = @TeacherUserId WHERE user_id IS NULL OR user_id = 0; END;",
+            "IF OBJECT_ID(N'teachers', N'U') IS NOT NULL AND OBJECT_ID(N'students', N'U') IS NOT NULL AND COL_LENGTH('students', 'teacher_id') IS NOT NULL BEGIN DECLARE @TeacherId INT = (SELECT TOP (1) id FROM teachers ORDER BY id); IF @TeacherId IS NOT NULL UPDATE students SET teacher_id = @TeacherId WHERE teacher_id IS NULL OR teacher_id = 0; END;"
+        };
+
+        foreach (var command in commands)
+        {
+            await dbContext.Database.ExecuteSqlRawAsync(command, cancellationToken);
+        }
+
+        logger.LogInformation("Legacy schema patch completed.");
+    }
+}

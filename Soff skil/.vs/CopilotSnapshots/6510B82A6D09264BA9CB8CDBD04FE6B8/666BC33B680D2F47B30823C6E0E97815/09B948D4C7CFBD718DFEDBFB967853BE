@@ -1,0 +1,118 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Soff_skil.Data;
+using Soff_skil.DTOs;
+
+namespace Soff_skil.Services;
+
+public class TeacherService : ITeacherService
+{
+    private sealed class StudentScoreProjection
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public double? LatestScore { get; set; }
+    }
+
+    private readonly ApplicationDbContext _dbContext;
+    private readonly ILogger<TeacherService> _logger;
+
+    public TeacherService(ApplicationDbContext dbContext, ILogger<TeacherService> logger)
+    {
+        _dbContext = dbContext;
+        _logger = logger;
+    }
+
+    // ================= DASHBOARD THEO TEACHER ID =================
+    public async Task<TeacherDashboardDto?> GetDashboardAsync(int teacherId, CancellationToken cancellationToken = default)
+    {
+        var teacher = await _dbContext.Teachers
+            .AsNoTracking()
+            .SingleOrDefaultAsync(x => x.Id == teacherId, cancellationToken);
+
+        if (teacher is null)
+            return null;
+
+        List<StudentScoreProjection> students;
+        try
+        {
+            students = await _dbContext.Students
+                .AsNoTracking()
+                .Where(x => x.TeacherId == teacherId)
+                .Select(x => new StudentScoreProjection
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    LatestScore = x.ProgressTrackings
+                        .OrderByDescending(p => p.WeekNumber)
+                        .Select(p => (double?)p.TotalScore)
+                        .FirstOrDefault()
+                })
+                .ToListAsync(cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Failed to read progress tracking for teacher {TeacherId}. Falling back to score=0.", teacherId);
+            students = await _dbContext.Students
+                .AsNoTracking()
+                .Where(x => x.TeacherId == teacherId)
+                .Select(x => new StudentScoreProjection
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    LatestScore = (double?)0
+                })
+                .ToListAsync(cancellationToken);
+        }
+
+        var studentDtos = students
+            .Select(x =>
+            {
+                var score = x.LatestScore ?? 0;
+                return new TeacherStudentDto
+                {
+                    StudentId = x.Id,
+                    StudentName = x.Name,
+                    Score = SoftSkillCalculator.NormalizeDashboardScore(score),
+                    Level = SoftSkillCalculator.ClassifyLevel(score)
+                };
+            })
+            .OrderBy(x => x.StudentName)
+            .ToList();
+
+        return new TeacherDashboardDto
+        {
+            TeacherId = teacher.Id,
+            TeacherName = teacher.Name,
+            TotalStudents = studentDtos.Count,
+            AverageScore = studentDtos.Count > 0 ? Math.Round(studentDtos.Average(x => x.Score), 2) : 0,
+            GoodCount = studentDtos.Count(x => x.Level == "Good"),
+            AverageCount = studentDtos.Count(x => x.Level == "Average"),
+            WeakCount = studentDtos.Count(x => x.Level == "Weak"),
+            Students = studentDtos
+        };
+    }
+
+    // ================= DASHBOARD THEO USER ID (JWT) =================
+    public async Task<TeacherDashboardDto?> GetDashboardByUserIdAsync(int userId, CancellationToken cancellationToken = default)
+    {
+        var teacher = await _dbContext.Teachers
+            .AsNoTracking()
+            .FirstOrDefaultAsync(t => t.UserId == userId, cancellationToken);
+
+        if (teacher == null)
+        {
+            // Backward compatibility for old databases without teacher.user_id mapping.
+            teacher = await _dbContext.Teachers
+                .AsNoTracking()
+                .OrderBy(t => t.Id)
+                .FirstOrDefaultAsync(cancellationToken);
+        }
+
+        if (teacher == null)
+        {
+            return null;
+        }
+
+        return await GetDashboardAsync(teacher.Id, cancellationToken);
+    }
+}

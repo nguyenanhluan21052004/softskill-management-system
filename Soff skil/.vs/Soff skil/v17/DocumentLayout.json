@@ -1,0 +1,1087 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Soff skil\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Hi\\AppData\\Local\\Temp\\CopilotBaseline\\c0bbb412\\~SoftSkillService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\services\\isoftskillservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\services\\isoftskillservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\repositories\\softskillrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\repositories\\softskillrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\repositories\\isoftskillrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\repositories\\isoftskillrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\services\\softskillservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\services\\softskillservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\dtos\\createevaluationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\dtos\\createevaluationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\controllers\\evaluationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\controllers\\evaluationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\services\\teacherservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\services\\teacherservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\dtos\\teacherstudentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\dtos\\teacherstudentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\dtos\\teacherdashboarddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\dtos\\teacherdashboarddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\controllers\\teachercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\controllers\\teachercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\dtos\\studentprogressdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\dtos\\studentprogressdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\dtos\\softskillstatisticsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\dtos\\softskillstatisticsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\dtos\\softskillresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\dtos\\softskillresultdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\dtos\\evaluationcreateresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\dtos\\evaluationcreateresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\services\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\services\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\services\\adminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\services\\adminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\dtos\\classroomsummarydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\dtos\\classroomsummarydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\controllers\\softskillcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\controllers\\softskillcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\models\\progresstracking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\models\\progresstracking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\data\\legacyschemapatcher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\data\\legacyschemapatcher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\dtos\\weeklytrackingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\dtos\\weeklytrackingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\dtos\\topsoftskillquerydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\dtos\\topsoftskillquerydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\dotnet\\sdk\\9.0.312\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.TargetFrameworkInference.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\services\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\services\\studentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\services\\iteacherservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\services\\iteacherservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\models\\teacher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\models\\teacher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\models\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\services\\softskillcalculator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\services\\softskillcalculator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\dtos\\softskillresultsresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\dtos\\softskillresultsresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\soff skil.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\soff skil.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\dtos\\addstudentrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\dtos\\addstudentrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\dtos\\softskillcalculationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\dtos\\softskillcalculationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\dtos\\studentcreatedresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\dtos\\studentcreatedresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Hi\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-1091020519\\WeatherForecastController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Hi\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\543514428\\WeatherForecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\dtos\\loginrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\dtos\\loginrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\dtos\\loginresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\dtos\\loginresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\dtos\\importexcelresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\dtos\\importexcelresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\dtos\\studentprofiledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\dtos\\studentprofiledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\services\\iadminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\services\\iadminservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\services\\istudentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\services\\istudentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\models\\evaluation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\models\\evaluation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\models\\evaluationdetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\models\\evaluationdetail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\models\\recommendation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\models\\recommendation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\dtos\\evaluationdetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\dtos\\evaluationdetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\dtos\\recommendationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\dtos\\recommendationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\controllers\\progresscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\controllers\\progresscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\controllers\\recommendationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\controllers\\recommendationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\models\\classroom.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\models\\classroom.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\models\\studentactivity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\models\\studentactivity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\dtos\\evaluationcreaterequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\dtos\\evaluationcreaterequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|d:\\soff skil\\soff skil\\dtos\\adminaccountoptiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{995ACCB1-1F7C-4D14-8909-18C71AF0E0A9}|Soff skil\\Soff skil.csproj|solutionrelative:soff skil\\dtos\\adminaccountoptiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "~SoftSkillService.cs",
+              "DocumentMoniker": "C:\\Users\\Hi\\AppData\\Local\\Temp\\CopilotBaseline\\c0bbb412\\~SoftSkillService.cs",
+              "ToolTip": "C:\\Users\\Hi\\AppData\\Local\\Temp\\CopilotBaseline\\c0bbb412\\~SoftSkillService.cs",
+              "ViewState": "AgIAAH4AAAAAAAAAAAAAAMAAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-08T15:38:34.505Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e506b91c-c606-466a-90a9-123d1d1e12b3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "SoftSkillService.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Services\\SoftSkillService.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Services\\SoftSkillService.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Services\\SoftSkillService.cs",
+              "RelativeToolTip": "Soff skil\\Services\\SoftSkillService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAcAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T14:17:55.311Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ISoftSkillService.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Services\\ISoftSkillService.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Services\\ISoftSkillService.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Services\\ISoftSkillService.cs",
+              "RelativeToolTip": "Soff skil\\Services\\ISoftSkillService.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAwwEMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T14:17:31.38Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CreateEvaluationDto.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\DTOs\\CreateEvaluationDto.cs",
+              "RelativeDocumentMoniker": "Soff skil\\DTOs\\CreateEvaluationDto.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\DTOs\\CreateEvaluationDto.cs",
+              "RelativeToolTip": "Soff skil\\DTOs\\CreateEvaluationDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T17:04:24.267Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ISoftSkillRepository.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Repositories\\ISoftSkillRepository.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Repositories\\ISoftSkillRepository.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Repositories\\ISoftSkillRepository.cs",
+              "RelativeToolTip": "Soff skil\\Repositories\\ISoftSkillRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T17:07:01.465Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SoftSkillRepository.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Repositories\\SoftSkillRepository.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Repositories\\SoftSkillRepository.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Repositories\\SoftSkillRepository.cs",
+              "RelativeToolTip": "Soff skil\\Repositories\\SoftSkillRepository.cs",
+              "ViewState": "AgIAADkAAAAAAAAAAAAgwFEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T17:07:09.615Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "EvaluationController.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Controllers\\EvaluationController.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Controllers\\EvaluationController.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Controllers\\EvaluationController.cs",
+              "RelativeToolTip": "Soff skil\\Controllers\\EvaluationController.cs",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAAwFIAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T17:08:11.853Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "TeacherService.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Services\\TeacherService.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Services\\TeacherService.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Services\\TeacherService.cs",
+              "RelativeToolTip": "Soff skil\\Services\\TeacherService.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwBIAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T15:26:17.602Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "TeacherStudentDto.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\DTOs\\TeacherStudentDto.cs",
+              "RelativeDocumentMoniker": "Soff skil\\DTOs\\TeacherStudentDto.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\DTOs\\TeacherStudentDto.cs",
+              "RelativeToolTip": "Soff skil\\DTOs\\TeacherStudentDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T15:23:05.374Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "TeacherDashboardDto.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\DTOs\\TeacherDashboardDto.cs",
+              "RelativeDocumentMoniker": "Soff skil\\DTOs\\TeacherDashboardDto.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\DTOs\\TeacherDashboardDto.cs",
+              "RelativeToolTip": "Soff skil\\DTOs\\TeacherDashboardDto.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAswBcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T15:23:18.844Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "TeacherController.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Controllers\\TeacherController.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Controllers\\TeacherController.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Controllers\\TeacherController.cs",
+              "RelativeToolTip": "Soff skil\\Controllers\\TeacherController.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAgwCEAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T15:28:48.127Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "SoftSkillResultDto.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\DTOs\\SoftSkillResultDto.cs",
+              "RelativeDocumentMoniker": "Soff skil\\DTOs\\SoftSkillResultDto.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\DTOs\\SoftSkillResultDto.cs",
+              "RelativeToolTip": "Soff skil\\DTOs\\SoftSkillResultDto.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAA1wBAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T14:33:47.954Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "EvaluationCreateResponseDto.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\DTOs\\EvaluationCreateResponseDto.cs",
+              "RelativeDocumentMoniker": "Soff skil\\DTOs\\EvaluationCreateResponseDto.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\DTOs\\EvaluationCreateResponseDto.cs",
+              "RelativeToolTip": "Soff skil\\DTOs\\EvaluationCreateResponseDto.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAgwBkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-08T07:19:55.039Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:2:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:3:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "SoftSkillStatisticsDto.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\DTOs\\SoftSkillStatisticsDto.cs",
+              "RelativeDocumentMoniker": "Soff skil\\DTOs\\SoftSkillStatisticsDto.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\DTOs\\SoftSkillStatisticsDto.cs",
+              "RelativeToolTip": "Soff skil\\DTOs\\SoftSkillStatisticsDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T14:34:13.125Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "StudentProgressDto.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\DTOs\\StudentProgressDto.cs",
+              "RelativeDocumentMoniker": "Soff skil\\DTOs\\StudentProgressDto.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\DTOs\\StudentProgressDto.cs",
+              "RelativeToolTip": "Soff skil\\DTOs\\StudentProgressDto.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAA5wBAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T17:04:40.368Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "IAuthService.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Services\\IAuthService.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Services\\IAuthService.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Services\\IAuthService.cs",
+              "RelativeToolTip": "Soff skil\\Services\\IAuthService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T15:24:06.218Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Services\\AuthService.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Services\\AuthService.cs",
+              "RelativeToolTip": "Soff skil\\Services\\AuthService.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAYwCQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T15:24:22.744Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "AdminService.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Services\\AdminService.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Services\\AdminService.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Services\\AdminService.cs",
+              "RelativeToolTip": "Soff skil\\Services\\AdminService.cs",
+              "ViewState": "AgIAAPsAAAAAAAAAAAAqwO0AAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T15:25:05.111Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "ClassroomSummaryDto.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\DTOs\\ClassroomSummaryDto.cs",
+              "RelativeDocumentMoniker": "Soff skil\\DTOs\\ClassroomSummaryDto.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\DTOs\\ClassroomSummaryDto.cs",
+              "RelativeToolTip": "Soff skil\\DTOs\\ClassroomSummaryDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-08T15:00:05.191Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Controllers\\AdminController.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "Soff skil\\Controllers\\AdminController.cs",
+              "ViewState": "AgIAAK0AAAAAAAAAAAAYwM0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T15:28:27.2Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "StudentController.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Controllers\\StudentController.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Controllers\\StudentController.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Controllers\\StudentController.cs",
+              "RelativeToolTip": "Soff skil\\Controllers\\StudentController.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAAAgwEUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T15:29:13.84Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "DashboardController.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Controllers\\DashboardController.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Controllers\\DashboardController.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Controllers\\DashboardController.cs",
+              "RelativeToolTip": "Soff skil\\Controllers\\DashboardController.cs",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAgwDcAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T17:08:34.715Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "SoftSkillController.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Controllers\\SoftSkillController.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Controllers\\SoftSkillController.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Controllers\\SoftSkillController.cs",
+              "RelativeToolTip": "Soff skil\\Controllers\\SoftSkillController.cs",
+              "ViewState": "AgIAAEoAAAAAAAAAAAAuwDgAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T14:18:28.766Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "ProgressTracking.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Models\\ProgressTracking.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Models\\ProgressTracking.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Models\\ProgressTracking.cs",
+              "RelativeToolTip": "Soff skil\\Models\\ProgressTracking.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAgwBsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T17:04:09.245Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "LegacySchemaPatcher.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Data\\LegacySchemaPatcher.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Data\\LegacySchemaPatcher.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Data\\LegacySchemaPatcher.cs",
+              "RelativeToolTip": "Soff skil\\Data\\LegacySchemaPatcher.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAIwFUAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T15:24:30.77Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "WeeklyTrackingDto.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\DTOs\\WeeklyTrackingDto.cs",
+              "RelativeDocumentMoniker": "Soff skil\\DTOs\\WeeklyTrackingDto.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\DTOs\\WeeklyTrackingDto.cs",
+              "RelativeToolTip": "Soff skil\\DTOs\\WeeklyTrackingDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T17:04:53.821Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 62,
+              "Title": "AdminAccountOptionDto.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\DTOs\\AdminAccountOptionDto.cs",
+              "RelativeDocumentMoniker": "Soff skil\\DTOs\\AdminAccountOptionDto.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\DTOs\\AdminAccountOptionDto.cs",
+              "RelativeToolTip": "Soff skil\\DTOs\\AdminAccountOptionDto.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAEBUwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-08T14:09:18.349Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 59,
+              "Title": "Classroom.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Models\\Classroom.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Models\\Classroom.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Models\\Classroom.cs",
+              "RelativeToolTip": "Soff skil\\Models\\Classroom.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T17:37:05.469Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 61,
+              "Title": "EvaluationCreateRequestDto.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\DTOs\\EvaluationCreateRequestDto.cs",
+              "RelativeDocumentMoniker": "Soff skil\\DTOs\\EvaluationCreateRequestDto.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\DTOs\\EvaluationCreateRequestDto.cs",
+              "RelativeToolTip": "Soff skil\\DTOs\\EvaluationCreateRequestDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-08T07:19:26.41Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Program.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Program.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Program.cs",
+              "RelativeToolTip": "Soff skil\\Program.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAABBwI4AAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T14:18:34.474Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 60,
+              "Title": "StudentActivity.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Models\\StudentActivity.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Models\\StudentActivity.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Models\\StudentActivity.cs",
+              "RelativeToolTip": "Soff skil\\Models\\StudentActivity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T18:01:11.095Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 54,
+              "Title": "Recommendation.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Models\\Recommendation.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Models\\Recommendation.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Models\\Recommendation.cs",
+              "RelativeToolTip": "Soff skil\\Models\\Recommendation.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T17:04:16.764Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "TopSoftSkillQueryDto.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\DTOs\\TopSoftSkillQueryDto.cs",
+              "RelativeDocumentMoniker": "Soff skil\\DTOs\\TopSoftSkillQueryDto.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\DTOs\\TopSoftSkillQueryDto.cs",
+              "RelativeToolTip": "Soff skil\\DTOs\\TopSoftSkillQueryDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T18:06:23.955Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 53,
+              "Title": "EvaluationDetail.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Models\\EvaluationDetail.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Models\\EvaluationDetail.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Models\\EvaluationDetail.cs",
+              "RelativeToolTip": "Soff skil\\Models\\EvaluationDetail.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T17:04:02.371Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 52,
+              "Title": "Evaluation.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Models\\Evaluation.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Models\\Evaluation.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Models\\Evaluation.cs",
+              "RelativeToolTip": "Soff skil\\Models\\Evaluation.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T17:03:55.454Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 58,
+              "Title": "RecommendationController.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Controllers\\RecommendationController.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Controllers\\RecommendationController.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Controllers\\RecommendationController.cs",
+              "RelativeToolTip": "Soff skil\\Controllers\\RecommendationController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T17:08:26.534Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 57,
+              "Title": "ProgressController.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Controllers\\ProgressController.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Controllers\\ProgressController.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Controllers\\ProgressController.cs",
+              "RelativeToolTip": "Soff skil\\Controllers\\ProgressController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T17:08:19.621Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 56,
+              "Title": "RecommendationDto.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\DTOs\\RecommendationDto.cs",
+              "RelativeDocumentMoniker": "Soff skil\\DTOs\\RecommendationDto.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\DTOs\\RecommendationDto.cs",
+              "RelativeToolTip": "Soff skil\\DTOs\\RecommendationDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T17:04:47.131Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 55,
+              "Title": "EvaluationDetailDto.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\DTOs\\EvaluationDetailDto.cs",
+              "RelativeDocumentMoniker": "Soff skil\\DTOs\\EvaluationDetailDto.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\DTOs\\EvaluationDetailDto.cs",
+              "RelativeToolTip": "Soff skil\\DTOs\\EvaluationDetailDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-07T17:04:32.66Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "Microsoft.NET.TargetFrameworkInference.targets",
+              "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\9.0.312\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.TargetFrameworkInference.targets",
+              "ToolTip": "C:\\Program Files\\dotnet\\sdk\\9.0.312\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.TargetFrameworkInference.targets",
+              "ViewState": "AgIAAIsAAAAAAAAAAAAqwKoAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2026-05-07T15:26:03.62Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "StudentService.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Services\\StudentService.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Services\\StudentService.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Services\\StudentService.cs",
+              "RelativeToolTip": "Soff skil\\Services\\StudentService.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAEBVwBIAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T15:26:53.959Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\appsettings.json",
+              "RelativeDocumentMoniker": "Soff skil\\appsettings.json",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\appsettings.json",
+              "RelativeToolTip": "Soff skil\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-04-23T14:18:45.71Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Controllers\\AuthController.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Soff skil\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAADYAAAAAAAAAACBjwCMAAABRAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T15:27:55.556Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "ITeacherService.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Services\\ITeacherService.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Services\\ITeacherService.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Services\\ITeacherService.cs",
+              "RelativeToolTip": "Soff skil\\Services\\ITeacherService.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAMBUwAoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T15:25:46.299Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "Teacher.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Models\\Teacher.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Models\\Teacher.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Models\\Teacher.cs",
+              "RelativeToolTip": "Soff skil\\Models\\Teacher.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAxwAcAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T15:20:15.402Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "Soff skil\\appsettings.Development.json",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\appsettings.Development.json",
+              "RelativeToolTip": "Soff skil\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-04-24T03:21:40.567Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "Student.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Models\\Student.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Models\\Student.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Models\\Student.cs",
+              "RelativeToolTip": "Soff skil\\Models\\Student.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAABQwBcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T14:15:36.872Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Data\\ApplicationDbContext.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "Soff skil\\Data\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAACBqwCEAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T14:16:08.547Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "SoftSkillCalculator.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Services\\SoftSkillCalculator.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Services\\SoftSkillCalculator.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Services\\SoftSkillCalculator.cs",
+              "RelativeToolTip": "Soff skil\\Services\\SoftSkillCalculator.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAABRwJEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T15:23:53.123Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 50,
+              "Title": "IAdminService.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Services\\IAdminService.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Services\\IAdminService.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Services\\IAdminService.cs",
+              "RelativeToolTip": "Soff skil\\Services\\IAdminService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAxwA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T15:24:36.422Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 51,
+              "Title": "IStudentService.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Services\\IStudentService.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Services\\IStudentService.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Services\\IStudentService.cs",
+              "RelativeToolTip": "Soff skil\\Services\\IStudentService.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAIBgwAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T15:26:40.156Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "LoginRequestDto.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\DTOs\\LoginRequestDto.cs",
+              "RelativeDocumentMoniker": "Soff skil\\DTOs\\LoginRequestDto.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\DTOs\\LoginRequestDto.cs",
+              "RelativeToolTip": "Soff skil\\DTOs\\LoginRequestDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T15:22:04.227Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 47,
+              "Title": "LoginResponseDto.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\DTOs\\LoginResponseDto.cs",
+              "RelativeDocumentMoniker": "Soff skil\\DTOs\\LoginResponseDto.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\DTOs\\LoginResponseDto.cs",
+              "RelativeToolTip": "Soff skil\\DTOs\\LoginResponseDto.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAEBgwAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T15:22:19.968Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 48,
+              "Title": "ImportExcelResponseDto.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\DTOs\\ImportExcelResponseDto.cs",
+              "RelativeDocumentMoniker": "Soff skil\\DTOs\\ImportExcelResponseDto.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\DTOs\\ImportExcelResponseDto.cs",
+              "RelativeToolTip": "Soff skil\\DTOs\\ImportExcelResponseDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T15:22:53.098Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 49,
+              "Title": "StudentProfileDto.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\DTOs\\StudentProfileDto.cs",
+              "RelativeDocumentMoniker": "Soff skil\\DTOs\\StudentProfileDto.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\DTOs\\StudentProfileDto.cs",
+              "RelativeToolTip": "Soff skil\\DTOs\\StudentProfileDto.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAuwAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T15:23:31.05Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Models\\User.cs",
+              "RelativeDocumentMoniker": "Soff skil\\Models\\User.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Models\\User.cs",
+              "RelativeToolTip": "Soff skil\\Models\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T15:20:01.548Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "SoftSkillResultsResponseDto.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\DTOs\\SoftSkillResultsResponseDto.cs",
+              "RelativeDocumentMoniker": "Soff skil\\DTOs\\SoftSkillResultsResponseDto.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\DTOs\\SoftSkillResultsResponseDto.cs",
+              "RelativeToolTip": "Soff skil\\DTOs\\SoftSkillResultsResponseDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T14:34:02.313Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "WeatherForecastController.cs",
+              "DocumentMoniker": "C:\\Users\\Hi\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-1091020519\\WeatherForecastController.cs",
+              "ToolTip": "C:\\Users\\Hi\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\-1091020519\\WeatherForecastController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T14:18:52.406Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "WeatherForecast.cs",
+              "DocumentMoniker": "C:\\Users\\Hi\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\543514428\\WeatherForecast.cs",
+              "ToolTip": "C:\\Users\\Hi\\AppData\\Local\\Temp\\CopilotBaseline\\Deleted\\543514428\\WeatherForecast.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T14:19:01.523Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "SoftSkillCalculationDto.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\DTOs\\SoftSkillCalculationDto.cs",
+              "RelativeDocumentMoniker": "Soff skil\\DTOs\\SoftSkillCalculationDto.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\DTOs\\SoftSkillCalculationDto.cs",
+              "RelativeToolTip": "Soff skil\\DTOs\\SoftSkillCalculationDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T14:16:31.167Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "AddStudentRequestDto.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\DTOs\\AddStudentRequestDto.cs",
+              "RelativeDocumentMoniker": "Soff skil\\DTOs\\AddStudentRequestDto.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\DTOs\\AddStudentRequestDto.cs",
+              "RelativeToolTip": "Soff skil\\DTOs\\AddStudentRequestDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAxwCEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T14:16:26.618Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "StudentCreatedResponseDto.cs",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\DTOs\\StudentCreatedResponseDto.cs",
+              "RelativeDocumentMoniker": "Soff skil\\DTOs\\StudentCreatedResponseDto.cs",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\DTOs\\StudentCreatedResponseDto.cs",
+              "RelativeToolTip": "Soff skil\\DTOs\\StudentCreatedResponseDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAxwAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-23T14:16:52.83Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "Soff skil.csproj",
+              "DocumentMoniker": "D:\\Soff skil\\Soff skil\\Soff skil.csproj",
+              "RelativeDocumentMoniker": "Soff skil\\Soff skil.csproj",
+              "ToolTip": "D:\\Soff skil\\Soff skil\\Soff skil.csproj",
+              "RelativeToolTip": "Soff skil\\Soff skil.csproj",
+              "ViewState": "AgIAAAgAAAAAAAAAAEBVwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-04-23T14:14:53.99Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 387,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

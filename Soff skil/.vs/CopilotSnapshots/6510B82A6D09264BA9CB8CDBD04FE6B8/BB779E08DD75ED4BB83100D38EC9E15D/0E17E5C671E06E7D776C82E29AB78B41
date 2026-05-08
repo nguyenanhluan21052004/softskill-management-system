@@ -1,0 +1,32 @@
+﻿using Soff_skil.DTOs;
+using Soff_skil.Services;
+
+namespace Soff_skil.Tests;
+
+public class SoftSkillCalculatorTests
+{
+    [Fact]
+    public void CalculateScore_ShouldFollowWeightedFormula()
+    {
+        var score = SoftSkillCalculator.CalculateFinalScore(
+            8.4,
+            8.8,
+            8.2,
+            8.1);
+
+        Assert.Equal(8.41, Math.Round(score, 2));
+    }
+
+    [Theory]
+    [InlineData(8.0, "Tốt")]
+    [InlineData(7.99, "Trung bình")]
+    [InlineData(6.5, "Trung bình")]
+    [InlineData(6.49, "Yếu")]
+    public void ClassifyLevel_ShouldRespectThresholds(double score, string expected)
+    {
+        var level = SoftSkillCalculator.ClassifyLevel(score);
+
+        Assert.Equal(expected, level);
+    }
+}
+
