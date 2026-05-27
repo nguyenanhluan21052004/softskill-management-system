@@ -125,6 +125,7 @@ public class TeacherService : ITeacherService
         {
             TeacherId = teacher.Id,
             TeacherName = teacher.Name,
+            Email = teacher.Email,
 
             // Tổng số lớp giáo viên phụ trách
             TotalClasses = classes.Count,
@@ -159,18 +160,67 @@ public class TeacherService : ITeacherService
 
         if (teacher == null)
         {
-            // Backward compatibility for old databases without teacher.user_id mapping.
-            teacher = await _dbContext.Teachers
-                .AsNoTracking()
-                .OrderBy(t => t.Id)
-                .FirstOrDefaultAsync(cancellationToken);
+            _logger.LogWarning("No teacher mapping found for user id {UserId}", userId);
+            return null;
         }
+
+        return await GetDashboardAsync(teacher.Id, cancellationToken);
+    }
+
+    public async Task<TeacherProfileDto?> UpdateProfileByUserIdAsync(
+        int userId,
+        UpdateTeacherProfileRequestDto request,
+        CancellationToken cancellationToken = default)
+    {
+        var teacher = await _dbContext.Teachers
+            .FirstOrDefaultAsync(t => t.UserId == userId, cancellationToken);
 
         if (teacher == null)
         {
             return null;
         }
 
-        return await GetDashboardAsync(teacher.Id, cancellationToken);
+        var email = request.Email.Trim();
+        var emailExists = await _dbContext.Teachers
+            .AnyAsync(t => t.Email == email && t.Id != teacher.Id, cancellationToken);
+
+        if (emailExists)
+        {
+            throw new InvalidOperationException($"Email {email} already exists.");
+        }
+
+        teacher.Name = request.Name.Trim();
+        teacher.Email = email;
+
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+        var user = teacher.UserId.HasValue
+            ? await _dbContext.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == teacher.UserId.Value, cancellationToken)
+            : null;
+
+        return new TeacherProfileDto
+        {
+            TeacherId = teacher.Id,
+            Name = teacher.Name,
+            Email = teacher.Email,
+            Username = user?.Username
+        };
+    }
+
+    public async Task UpdatePasswordByUserIdAsync(
+        int userId,
+        UpdateTeacherPasswordRequestDto request,
+        CancellationToken cancellationToken = default)
+    {
+        var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId, cancellationToken)
+            ?? throw new InvalidOperationException("User not found.");
+
+        if (!PasswordHasher.VerifyPassword(request.CurrentPassword, user.Password))
+        {
+            throw new InvalidOperationException("Current password is incorrect.");
+        }
+
+        user.Password = PasswordHasher.HashPassword(request.NewPassword);
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }

@@ -135,13 +135,13 @@ public class ApplicationDbContext : DbContext
         {
             entity.ToTable("evaluations");
             entity.HasKey(e => e.EvaluationId);
-            entity.Property(e => e.EvaluationId).HasColumnName("evaluation_id");
-            entity.Property(e => e.StudentId).HasColumnName("student_id");
-            entity.Property(e => e.EvaluatorId).HasColumnName("evaluator_id");
-            entity.Property(e => e.EvaluatorType).HasColumnName("evaluator_type").HasMaxLength(50).IsRequired();
-            entity.Property(e => e.WeekNumber).HasColumnName("week_number");
-            entity.Property(e => e.EvaluationDate).HasColumnName("evaluation_date");
-            entity.Property(e => e.Comment).HasColumnName("comment").HasMaxLength(500);
+            entity.Property(e => e.EvaluationId).HasColumnName("EvaluationId");
+            entity.Property(e => e.StudentId).HasColumnName("StudentId");
+            entity.Property(e => e.EvaluatorId).HasColumnName("EvaluatorId");
+            entity.Property(e => e.EvaluatorType).HasColumnName("EvaluatorType").HasMaxLength(50).IsRequired();
+            entity.Property(e => e.WeekNumber).HasColumnName("WeekNumber");
+            entity.Property(e => e.EvaluationDate).HasColumnName("EvaluationDate");
+            entity.Property(e => e.Comment).HasColumnName("Comment").HasMaxLength(500);
 
             entity.HasMany(e => e.Details)
                 .WithOne(e => e.Evaluation)
@@ -153,12 +153,12 @@ public class ApplicationDbContext : DbContext
         {
             entity.ToTable("evaluation_details");
             entity.HasKey(e => e.DetailId);
-            entity.Property(e => e.DetailId).HasColumnName("detail_id");
-            entity.Property(e => e.EvaluationId).HasColumnName("evaluation_id");
-            entity.Property(e => e.SkillType).HasColumnName("skill_type").HasMaxLength(100).IsRequired();
-            entity.Property(e => e.Score).HasColumnName("score");
-            entity.Property(e => e.Weight).HasColumnName("weight");
-            entity.Property(e => e.Comment).HasColumnName("comment").HasMaxLength(500);
+            entity.Property(e => e.DetailId).HasColumnName("DetailId");
+            entity.Property(e => e.EvaluationId).HasColumnName("EvaluationId");
+            entity.Property(e => e.SkillType).HasColumnName("SkillType").HasMaxLength(100).IsRequired();
+            entity.Property(e => e.Score).HasColumnName("Score");
+            entity.Property(e => e.Weight).HasColumnName("Weight");
+            entity.Property(e => e.Comment).HasColumnName("Comment").HasMaxLength(500);
             entity.HasIndex(e => e.EvaluationId);
         });
 
@@ -166,13 +166,13 @@ public class ApplicationDbContext : DbContext
         {
             entity.ToTable("progress_tracking");
             entity.HasKey(e => e.ProgressId);
-            entity.Property(e => e.ProgressId).HasColumnName("progress_id");
-            entity.Property(e => e.StudentId).HasColumnName("student_id");
-            entity.Property(e => e.WeekNumber).HasColumnName("week_number");
-            entity.Property(e => e.TotalScore).HasColumnName("total_score");
-            entity.Property(e => e.Rank).HasColumnName("rank");
-            entity.Property(e => e.AlertFlag).HasColumnName("alert_flag");
-            entity.Property(e => e.UpdatedAt).HasColumnName("updated_at");
+            entity.Property(e => e.ProgressId).HasColumnName("ProgressId");
+            entity.Property(e => e.StudentId).HasColumnName("StudentId");
+            entity.Property(e => e.WeekNumber).HasColumnName("WeekNumber");
+            entity.Property(e => e.TotalScore).HasColumnName("TotalScore");
+            entity.Property(e => e.Rank).HasColumnName("Rank");
+            entity.Property(e => e.AlertFlag).HasColumnName("AlertFlag");
+            entity.Property(e => e.UpdatedAt).HasColumnName("UpdatedAt");
             entity.HasIndex(e => new { e.StudentId, e.WeekNumber }).IsUnique();
         });
 
@@ -180,11 +180,11 @@ public class ApplicationDbContext : DbContext
         {
             entity.ToTable("recommendations");
             entity.HasKey(e => e.RecommendationId);
-            entity.Property(e => e.RecommendationId).HasColumnName("recommendation_id");
-            entity.Property(e => e.StudentId).HasColumnName("student_id");
-            entity.Property(e => e.SkillType).HasColumnName("skill_type").HasMaxLength(100).IsRequired();
-            entity.Property(e => e.Suggestion).HasColumnName("suggestion").HasMaxLength(500).IsRequired();
-            entity.Property(e => e.CreatedAt).HasColumnName("created_at");
+            entity.Property(e => e.RecommendationId).HasColumnName("RecommendationId");
+            entity.Property(e => e.StudentId).HasColumnName("StudentId");
+            entity.Property(e => e.SkillType).HasColumnName("SkillType").HasMaxLength(100).IsRequired();
+            entity.Property(e => e.Suggestion).HasColumnName("Suggestion").HasMaxLength(500).IsRequired();
+            entity.Property(e => e.CreatedAt).HasColumnName("CreatedAt");
             entity.HasIndex(e => e.StudentId);
         });
 

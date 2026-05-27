@@ -153,34 +153,129 @@ namespace Soff_skil.Services
             // SAVE EVALUATION
             // --------------------------
 
-            var evaluation = new Evaluation
+            var evaluation = await _dbContext.Evaluations
+                .FirstOrDefaultAsync(
+                    x => x.StudentId == request.StudentId && x.WeekNumber == request.WeekNumber,
+                    cancellationToken);
+
+            if (evaluation == null)
             {
-                StudentId = request.StudentId,
-                EvaluatorId = request.EvaluatorId,
-                EvaluatorType = request.EvaluatorType,
-                WeekNumber = request.WeekNumber,
-                EvaluationDate = DateTime.UtcNow,
-                Comment = request.TeacherComment
+                evaluation = new Evaluation
+                {
+                    StudentId = request.StudentId,
+                    EvaluatorId = request.EvaluatorId,
+                    EvaluatorType = request.EvaluatorType,
+                    WeekNumber = request.WeekNumber,
+                    EvaluationDate = DateTime.UtcNow,
+                    Comment = request.TeacherComment
+                };
+                _dbContext.Evaluations.Add(evaluation);
+            }
+            else
+            {
+                evaluation.EvaluatorId = request.EvaluatorId;
+                evaluation.EvaluatorType = request.EvaluatorType;
+                evaluation.EvaluationDate = DateTime.UtcNow;
+                evaluation.Comment = request.TeacherComment;
+            }
+
+            await _dbContext.SaveChangesAsync(cancellationToken);
+
+            // --------------------------
+            // SAVE STUDENT ACTIVITY
+            // --------------------------
+
+            var activity = await _dbContext.StudentActivities
+                .FirstOrDefaultAsync(
+                    x => x.StudentId == request.StudentId && x.WeekNumber == request.WeekNumber,
+                    cancellationToken);
+
+            if (activity == null)
+            {
+                activity = new StudentActivity
+                {
+                    StudentId = request.StudentId,
+                    WeekNumber = request.WeekNumber
+                };
+                _dbContext.StudentActivities.Add(activity);
+            }
+
+            activity.Attendance = request.Attendance;
+            activity.Assignment = request.Assignment;
+            activity.Presentation = request.Presentation;
+            activity.Project = request.Project;
+            activity.PeerReview = request.PeerReview;
+            activity.TeamContribution = request.TeamContribution;
+            activity.UpdatedAt = DateTime.UtcNow;
+
+            // --------------------------
+            // SAVE EVALUATION DETAILS
+            // --------------------------
+
+            var detailScores = new[]
+            {
+                new { SkillType = "Communication", Score = communication, Weight = 0.25 },
+                new { SkillType = "Teamwork", Score = teamwork, Weight = 0.30 },
+                new { SkillType = "CriticalThinking", Score = criticalThinking, Weight = 0.25 },
+                new { SkillType = "TimeManagement", Score = timeManagement, Weight = 0.20 },
             };
 
-            _dbContext.Evaluations.Add(evaluation);
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            var existingDetails = await _dbContext.EvaluationDetails
+                .Where(d => d.EvaluationId == evaluation.EvaluationId)
+                .ToListAsync(cancellationToken);
+
+            foreach (var detail in detailScores)
+            {
+                var match = existingDetails
+                    .FirstOrDefault(d => d.SkillType == detail.SkillType);
+
+                if (match == null)
+                {
+                    _dbContext.EvaluationDetails.Add(new EvaluationDetail
+                    {
+                        EvaluationId = evaluation.EvaluationId,
+                        SkillType = detail.SkillType,
+                        Score = detail.Score,
+                        Weight = detail.Weight,
+                        Comment = string.Empty
+                    });
+                }
+                else
+                {
+                    match.Score = detail.Score;
+                    match.Weight = detail.Weight;
+                }
+            }
 
             // --------------------------
             // SAVE PROGRESS TRACKING
             // --------------------------
 
-            var progress = new ProgressTracking
-            {
-                StudentId = request.StudentId,
-                WeekNumber = request.WeekNumber,
-                TotalScore = finalScore,
-                Rank = rank,
-                AlertFlag = finalScore < 6.5,
-                UpdatedAt = DateTime.UtcNow
-            };
+            var progress = await _dbContext.ProgressTrackings
+                .FirstOrDefaultAsync(
+                    x => x.StudentId == request.StudentId && x.WeekNumber == request.WeekNumber,
+                    cancellationToken);
 
-            _dbContext.ProgressTrackings.Add(progress);
+            if (progress == null)
+            {
+                progress = new ProgressTracking
+                {
+                    StudentId = request.StudentId,
+                    WeekNumber = request.WeekNumber,
+                    TotalScore = finalScore,
+                    Rank = rank,
+                    AlertFlag = finalScore < 6.5,
+                    UpdatedAt = DateTime.UtcNow
+                };
+                _dbContext.ProgressTrackings.Add(progress);
+            }
+            else
+            {
+                progress.TotalScore = finalScore;
+                progress.Rank = rank;
+                progress.AlertFlag = finalScore < 6.5;
+                progress.UpdatedAt = DateTime.UtcNow;
+            }
 
             // --------------------------
             // SAVE RECOMMENDATION
@@ -212,7 +307,19 @@ namespace Soff_skil.Services
 
             return new EvaluationCreateResponseDto
             {
+                EvaluationId = evaluation.EvaluationId,
                 StudentId = request.StudentId,
+                EvaluatorId = request.EvaluatorId,
+                EvaluatorType = request.EvaluatorType,
+                WeekNumber = request.WeekNumber,
+                EvaluationDate = evaluation.EvaluationDate,
+                TeacherComment = request.TeacherComment,
+                Attendance = request.Attendance,
+                Assignment = request.Assignment,
+                Presentation = request.Presentation,
+                Project = request.Project,
+                PeerReview = request.PeerReview,
+                TeamContribution = request.TeamContribution,
                 FinalScore = finalScore,
                 Level = rank,
                 Communication = communication,
@@ -281,6 +388,134 @@ namespace Soff_skil.Services
                     CreatedAt = x.CreatedAt
                 })
                 .ToListAsync(cancellationToken);
+        }
+
+        // =====================================================
+        // GET EVALUATION HISTORY
+        // =====================================================
+
+        public async Task<IReadOnlyList<CreateEvaluationDto>> GetEvaluationsByStudentAsync(
+            int studentId,
+            CancellationToken cancellationToken = default)
+        {
+            var evaluations = await _dbContext.Evaluations
+                .AsNoTracking()
+                .Include(e => e.Details)
+                .Where(e => e.StudentId == studentId)
+                .ToListAsync(cancellationToken);
+
+            var activities = await _dbContext.StudentActivities
+                .AsNoTracking()
+                .Where(a => a.StudentId == studentId)
+                .ToListAsync(cancellationToken);
+
+            var progressTrackings = await _dbContext.ProgressTrackings
+                .AsNoTracking()
+                .Where(p => p.StudentId == studentId)
+                .ToListAsync(cancellationToken);
+
+            var evaluationLookup = evaluations
+                .GroupBy(e => e.WeekNumber)
+                .ToDictionary(g => g.Key, g => g.First());
+
+            var activityLookup = activities
+                .GroupBy(a => a.WeekNumber)
+                .ToDictionary(g => g.Key, g => g.First());
+
+            var progressLookup = progressTrackings
+                .GroupBy(p => p.WeekNumber)
+                .ToDictionary(g => g.Key, g => g.First());
+
+            var weeks = evaluations.Select(e => e.WeekNumber)
+                .Concat(activities.Select(a => a.WeekNumber))
+                .Concat(progressTrackings.Select(p => p.WeekNumber))
+                .Distinct()
+                .OrderBy(week => week)
+                .ToList();
+
+            var results = new List<CreateEvaluationDto>(weeks.Count);
+
+            foreach (var week in weeks)
+            {
+                evaluationLookup.TryGetValue(week, out var evaluation);
+                activityLookup.TryGetValue(week, out var activity);
+                progressLookup.TryGetValue(week, out var tracking);
+
+                var communication = activity != null
+                    ? SoftSkillCalculator.CalculateCommunication(
+                        activity.Presentation,
+                        activity.Assignment,
+                        activity.PeerReview)
+                    : 0;
+
+                var teamwork = activity != null
+                    ? SoftSkillCalculator.CalculateTeamwork(
+                        activity.PeerReview,
+                        activity.TeamContribution,
+                        activity.Project)
+                    : 0;
+
+                var criticalThinking = activity != null
+                    ? SoftSkillCalculator.CalculateCriticalThinking(
+                        activity.Assignment,
+                        activity.Project)
+                    : 0;
+
+                var timeManagement = activity != null
+                    ? SoftSkillCalculator.CalculateTimeManagement(
+                        activity.Attendance,
+                        activity.Assignment)
+                    : 0;
+
+                var detailScoreSource = evaluation?.Details ?? Enumerable.Empty<EvaluationDetail>();
+
+                var finalScore = tracking?.TotalScore
+                    ?? (activity != null
+                        ? SoftSkillCalculator.CalculateFinalScore(
+                            communication,
+                            teamwork,
+                            criticalThinking,
+                            timeManagement)
+                        : SoftSkillCalculator.CalculateWeightedScore(detailScoreSource));
+
+                var level = tracking?.Rank
+                    ?? (finalScore > 0
+                        ? SoftSkillCalculator.ClassifyLevel(finalScore)
+                        : "Chưa đánh giá");
+
+                var details = evaluation?.Details
+                    .OrderBy(d => d.DetailId)
+                    .Select(d => new EvaluationDetailDto
+                    {
+                        SkillType = d.SkillType,
+                        Score = d.Score,
+                        Weight = d.Weight,
+                        Comment = d.Comment
+                    })
+                    .ToList() ?? [];
+
+                results.Add(new CreateEvaluationDto
+                {
+                    EvaluationId = evaluation?.EvaluationId,
+                    StudentId = studentId,
+                    EvaluatorId = evaluation?.EvaluatorId ?? 0,
+                    EvaluatorType = evaluation?.EvaluatorType ?? string.Empty,
+                    WeekNumber = week,
+                    EvaluationDate = evaluation?.EvaluationDate
+                        ?? activity?.UpdatedAt
+                        ?? DateTime.UtcNow,
+                    Comment = evaluation?.Comment ?? string.Empty,
+                    Communication = communication,
+                    Teamwork = teamwork,
+                    CriticalThinking = criticalThinking,
+                    TimeManagement = timeManagement,
+                    FinalScore = SoftSkillCalculator.NormalizeDashboardScore(finalScore),
+                    Level = level,
+                    Details = details
+                });
+            }
+
+            return results;
         }
 
         // =====================================================

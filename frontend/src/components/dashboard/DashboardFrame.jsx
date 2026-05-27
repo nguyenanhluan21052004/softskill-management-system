@@ -39,8 +39,8 @@ const DashboardFrame = ({
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(59,130,246,0.15),_transparent_28%),radial-gradient(circle_at_top_right,_rgba(167,139,250,0.10),_transparent_25%),linear-gradient(180deg,#f8fbff_0%,#eef4ff_100%)]">
-      <div className="mx-auto flex min-h-screen w-full max-w-[1600px] flex-col xl:flex-row">
-        <aside className={`w-full bg-gradient-to-b ${theme.sidebar} px-5 py-6 text-white xl:min-h-screen xl:w-[280px] xl:px-4`}>
+      <div className="mx-auto flex min-h-screen w-full max-w-[1600px] flex-row">
+        <aside className={`w-[280px] shrink-0 bg-gradient-to-b ${theme.sidebar} px-4 py-6 text-white`}>
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
             <p className="text-xs font-semibold uppercase tracking-[0.35em] text-white/70">System</p>
             <h1 className="mt-2 text-2xl font-extrabold tracking-tight">SOFT SKILLS</h1>
@@ -90,7 +90,7 @@ const DashboardFrame = ({
           </div>
         </aside>
 
-        <div className="flex-1 px-4 py-4 sm:px-6 xl:px-8">
+        <div className="min-w-0 flex-1 px-4 py-4 sm:px-6 xl:px-8">
           <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
             <div className="min-w-0">
               <header className="rounded-[28px] border border-slate-200/70 bg-white/90 px-5 py-5 shadow-[0_20px_60px_-35px_rgba(15,23,42,0.35)] backdrop-blur sm:px-6">

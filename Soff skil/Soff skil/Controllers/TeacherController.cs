@@ -53,4 +53,63 @@ public class TeacherController : ControllerBase
             Role = role
         });
     }
+
+    [HttpPut("profile")]
+    public async Task<ActionResult<TeacherProfileDto>> UpdateProfile(
+        [FromBody] UpdateTeacherProfileRequestDto request,
+        CancellationToken cancellationToken)
+    {
+        if (!ModelState.IsValid)
+        {
+            return ValidationProblem(ModelState);
+        }
+
+        var claimValue = User.FindFirst("id")?.Value ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (!int.TryParse(claimValue, out var userId))
+        {
+            return Unauthorized("Invalid token: missing user id.");
+        }
+
+        try
+        {
+            var profile = await _teacherService.UpdateProfileByUserIdAsync(userId, request, cancellationToken);
+            if (profile == null)
+            {
+                return NotFound("Teacher not found.");
+            }
+
+            return Ok(profile);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPut("password")]
+    public async Task<IActionResult> UpdatePassword(
+        [FromBody] UpdateTeacherPasswordRequestDto request,
+        CancellationToken cancellationToken)
+    {
+        if (!ModelState.IsValid)
+        {
+            return ValidationProblem(ModelState);
+        }
+
+        var claimValue = User.FindFirst("id")?.Value ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (!int.TryParse(claimValue, out var userId))
+        {
+            return Unauthorized("Invalid token: missing user id.");
+        }
+
+        try
+        {
+            await _teacherService.UpdatePasswordByUserIdAsync(userId, request, cancellationToken);
+            return Ok(new { message = "Password updated successfully." });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 }

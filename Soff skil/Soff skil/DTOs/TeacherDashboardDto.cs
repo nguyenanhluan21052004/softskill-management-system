@@ -6,6 +6,8 @@ public class TeacherDashboardDto
 
     public string TeacherName { get; set; } = string.Empty;
 
+    public string? Email { get; set; }
+
     // 🔥 thêm dòng này
     public int TotalClasses { get; set; }
 

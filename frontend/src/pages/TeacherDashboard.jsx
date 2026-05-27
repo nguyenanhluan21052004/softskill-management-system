@@ -4,10 +4,6 @@ import {
   BarChart,
   CartesianGrid,
   Cell,
-  Line,
-  LineChart,
-  Pie,
-  PieChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -16,7 +12,14 @@ import {
 import DashboardFrame from '../components/dashboard/DashboardFrame';
 import ErrorState from '../components/ui/ErrorState';
 import Spinner from '../components/ui/Spinner';
-import { getClassrooms, getCurrentTeacher, getStudentEvaluations, saveStudentEvaluation } from '../services/api';
+import {
+  getClassrooms,
+  getCurrentTeacher,
+  getStudentEvaluations,
+  saveStudentEvaluation,
+  updateTeacherPassword,
+  updateTeacherProfile,
+} from '../services/api';
 
 const TEACHER_SECTIONS = [
   { key: 'overview', label: 'Tong quan' },
@@ -126,6 +129,44 @@ const buildSkillScore = (metrics) => {
   };
 };
 
+const normalizeEvaluationHistory = (items = []) => {
+  if (!Array.isArray(items)) return [];
+
+  return items.map((item, index) => {
+    const weekNumber =
+      item.weekNumber ??
+      item.WeekNumber ??
+      item.weekOrder ??
+      item.week ??
+      index + 1;
+    const finalScore = parseNumber(
+      item.finalScore ?? item.FinalScore ?? item.softSkillScore ?? item.score ?? item.totalScore ?? item.TotalScore,
+      0
+    );
+    const level = item.level || item.Level || item.rank || item.Rank || levelFromScore(finalScore);
+
+    return {
+      ...item,
+      weekNumber,
+      week: weekNumber,
+      weekLabel: item.weekLabel || `Tuan ${weekNumber}`,
+      softSkillScore: finalScore,
+      score: finalScore,
+      level,
+      communication: parseNumber(item.communication ?? item.Communication ?? item.communicationScore, NaN),
+      teamwork: parseNumber(item.teamwork ?? item.Teamwork ?? item.teamworkScore, NaN),
+      criticalThinking: parseNumber(item.criticalThinking ?? item.CriticalThinking ?? item.criticalThinkingScore, NaN),
+      timeManagement: parseNumber(item.timeManagement ?? item.TimeManagement ?? item.timeManagementScore, NaN),
+      attendance: item.attendance ?? item.Attendance,
+      assignment: item.assignment ?? item.Assignment,
+      presentation: item.presentation ?? item.Presentation,
+      project: item.project ?? item.Project,
+      peerReview: item.peerReview ?? item.PeerReview,
+      teamContribution: item.teamContribution ?? item.TeamContribution,
+    };
+  });
+};
+
 const computeWeakestSkill = (student) => {
   const scores = SKILL_META.map((skill) => ({
     key: skill.key,
@@ -146,7 +187,7 @@ const normalizeStudents = (items = []) => {
       return {
         id: item.id || item.studentId || `sv-${index + 1}`,
         name: item.name || item.studentName || `Sinh vien ${index + 1}`,
-        className: item.className || item.class || item.classroom || 'CNTT-K17A',
+        className: item.classCode || item.className || item.class || item.classroom || 'Chua phan lop',
         score,
         level: item.level || levelFromScore(score),
         communication: parseNumber(item.communication ?? item.communicationScore, score),
@@ -288,6 +329,7 @@ const SummaryCard = ({ label, value, note }) => (
 
 const TeacherDashboard = ({ user, onLogout }) => {
   const [teacherProfile, setTeacherProfile] = useState({
+    id: null,
     name: user?.name || 'Giang vien',
     email: '',
     department: 'Bo mon Cong nghe thong tin',
@@ -320,6 +362,8 @@ const TeacherDashboard = ({ user, onLogout }) => {
   });
   const [profileMessage, setProfileMessage] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
+  const [profileSaving, setProfileSaving] = useState(false);
+  const [passwordSaving, setPasswordSaving] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -335,16 +379,23 @@ const TeacherDashboard = ({ user, onLogout }) => {
         const teacherData = teacherResponse?.data || {};
         const normalizedStudents = normalizeStudents(teacherData.students || teacherData.results || teacherData.items || []);
         const classroomList = Array.isArray(classroomResponse?.data) ? classroomResponse.data : [];
-        const teacherName = teacherData.name || teacherData.fullName || user?.name || 'Nguyen Van A';
+        const teacherId = teacherData.teacherId || teacherData.id || teacherData.userId || null;
+        const teacherName =
+          teacherData.teacherName || teacherData.name || teacherData.fullName || user?.name || 'Giang vien';
         const teacherEmail =
           teacherData.email ||
           teacherData.username ||
           `${teacherName.toLowerCase().replace(/\s+/g, '.')}@university.edu.vn`;
-        const teacherDepartment = teacherData.department || teacherData.faculty || 'Bo mon Cong nghe thong tin';
+        const storedDepartment =
+          typeof window !== 'undefined' && teacherId
+            ? window.localStorage.getItem(`ss_teacher_department_${teacherId}`)
+            : null;
+        const teacherDepartment = storedDepartment || teacherData.department || teacherData.faculty || 'Bo mon Cong nghe thong tin';
 
         setStudents(normalizedStudents);
         setClassrooms(classroomList);
         setTeacherProfile({
+          id: teacherId,
           name: teacherName,
           email: teacherEmail,
           department: teacherDepartment,
@@ -442,8 +493,8 @@ const TeacherDashboard = ({ user, onLogout }) => {
 
       try {
         const response = await getStudentEvaluations(selectedStudentId);
-        const records = Array.isArray(response?.data) ? response.data : [];
-        const sorted = [...records].sort((a, b) => Number(a.weekOrder ?? a.week) - Number(b.weekOrder ?? b.week));
+        const records = normalizeEvaluationHistory(response?.data);
+        const sorted = [...records].sort((a, b) => Number(a.weekNumber) - Number(b.weekNumber));
         setStudentHistory(sorted);
       } catch (_error) {
         setStudentHistory([]);
@@ -454,18 +505,29 @@ const TeacherDashboard = ({ user, onLogout }) => {
   }, [selectedStudentId]);
 
   useEffect(() => {
-    const currentRecord = studentHistory.find((item) => String(item.week) === String(selectedWeek));
+    const currentRecord = studentHistory.find((item) => String(item.weekNumber) === String(selectedWeek));
     if (currentRecord) {
-      setEvaluationForm({
-        attendance: `${parseNumber(currentRecord.attendance, 8)}`,
-        assignment: `${parseNumber(currentRecord.assignment, 8)}`,
-        presentation: `${parseNumber(currentRecord.presentation, 8)}`,
-        project: `${parseNumber(currentRecord.project, 8)}`,
-        peerReview: `${parseNumber(currentRecord.peerReview, 8)}`,
-        teamContribution: `${parseNumber(currentRecord.teamContribution, 8)}`,
-        comment: currentRecord.comment || '',
-      });
-      return;
+      const hasRawMetrics = [
+        currentRecord.attendance,
+        currentRecord.assignment,
+        currentRecord.presentation,
+        currentRecord.project,
+        currentRecord.peerReview,
+        currentRecord.teamContribution,
+      ].some((value) => value !== undefined && value !== null);
+
+      if (hasRawMetrics) {
+        setEvaluationForm({
+          attendance: `${parseNumber(currentRecord.attendance, 8)}`,
+          assignment: `${parseNumber(currentRecord.assignment, 8)}`,
+          presentation: `${parseNumber(currentRecord.presentation, 8)}`,
+          project: `${parseNumber(currentRecord.project, 8)}`,
+          peerReview: `${parseNumber(currentRecord.peerReview, 8)}`,
+          teamContribution: `${parseNumber(currentRecord.teamContribution, 8)}`,
+          comment: currentRecord.comment || '',
+        });
+        return;
+      }
     }
 
     setEvaluationForm(defaultEvaluationForm);
@@ -521,7 +583,7 @@ const TeacherDashboard = ({ user, onLogout }) => {
         .slice(-4)
         .reverse()
         .map((item) => ({
-          title: `Cap nhat ${item.weekLabel || `Tuan ${item.week}`} cho ${currentStudent.name}`,
+          title: `Cap nhat ${item.weekLabel || `Tuan ${item.weekNumber}`} cho ${currentStudent.name}`,
           score: parseNumber(item.softSkillScore ?? item.score, 0).toFixed(2),
           level: item.level || levelFromScore(parseNumber(item.softSkillScore ?? item.score, 0)),
           time: item.updatedAt ? new Date(item.updatedAt).toLocaleDateString('vi-VN') : 'Gan day',
@@ -553,14 +615,14 @@ const TeacherDashboard = ({ user, onLogout }) => {
   const evaluationPreview = useMemo(() => buildSkillScore(evaluationForm), [evaluationForm]);
 
   const selectedWeekRecord = useMemo(
-    () => studentHistory.find((item) => String(item.week) === String(selectedWeek)),
+    () => studentHistory.find((item) => String(item.weekNumber) === String(selectedWeek)),
     [selectedWeek, studentHistory]
   );
 
   const historyChartData = useMemo(() => {
     if (studentHistory.length > 0) {
       return studentHistory.map((item) => ({
-        label: item.weekLabel || `Tuan ${item.week}`,
+        label: item.weekLabel || `Tuan ${item.weekNumber}`,
         score: parseNumber(item.softSkillScore ?? item.score, 0),
       }));
     }
@@ -655,7 +717,7 @@ const TeacherDashboard = ({ user, onLogout }) => {
             title: 'Thanh phan',
             items: [
               'Cards tong hop ket qua lop.',
-              'Pie chart phan bo xep loai.',
+              'Bar chart phan bo xep loai.',
               'Bar chart diem trung binh theo ky nang.',
               'Bang sinh vien can ho tro som va hoat dong danh gia gan day.',
             ],
@@ -787,11 +849,13 @@ const TeacherDashboard = ({ user, onLogout }) => {
       await saveStudentEvaluation({
         studentId: currentStudent.id,
         payload,
+        evaluatorId: teacherProfile.id,
+        evaluatorType: 'teacher',
       });
 
       const response = await getStudentEvaluations(currentStudent.id);
-      const records = Array.isArray(response?.data) ? response.data : [];
-      setStudentHistory(records.sort((a, b) => Number(a.weekOrder ?? a.week) - Number(b.weekOrder ?? b.week)));
+      const records = normalizeEvaluationHistory(response?.data);
+      setStudentHistory(records.sort((a, b) => Number(a.weekNumber) - Number(b.weekNumber)));
       setEvaluationMessage(
         mode === 'update'
           ? `Da cap nhat danh gia cho ${currentStudent.name} (${payload.weekLabel}).`
@@ -885,19 +949,42 @@ const TeacherDashboard = ({ user, onLogout }) => {
     );
   };
 
-  const handleProfileSubmit = (event) => {
+  const handleProfileSubmit = async (event) => {
     event.preventDefault();
-    setTeacherProfile((current) => ({
-      ...current,
-      name: profileForm.name,
-      email: profileForm.email,
-      department: profileForm.department,
-    }));
-    setProfileMessage('Da cap nhat thong tin ho so ca nhan.');
+    setProfileMessage('');
+    setProfileSaving(true);
+
+    try {
+      const response = await updateTeacherProfile({
+        name: profileForm.name,
+        email: profileForm.email,
+      });
+      const data = response?.data || {};
+
+      setTeacherProfile((current) => ({
+        ...current,
+        name: data.name || profileForm.name,
+        email: data.email || profileForm.email,
+        department: profileForm.department,
+      }));
+
+      if (typeof window !== 'undefined' && teacherProfile.id) {
+        window.localStorage.setItem(`ss_teacher_department_${teacherProfile.id}`, profileForm.department);
+      }
+
+      setProfileMessage('Da cap nhat thong tin ho so ca nhan.');
+    } catch (requestError) {
+      setProfileMessage(
+        requestError?.response?.data?.message || requestError?.message || 'Khong the cap nhat ho so.'
+      );
+    } finally {
+      setProfileSaving(false);
+    }
   };
 
-  const handlePasswordSubmit = (event) => {
+  const handlePasswordSubmit = async (event) => {
     event.preventDefault();
+    setPasswordMessage('');
     if (passwordForm.newPassword.length < 6) {
       setPasswordMessage('Mat khau moi can toi thieu 6 ky tu.');
       return;
@@ -908,12 +995,25 @@ const TeacherDashboard = ({ user, onLogout }) => {
       return;
     }
 
-    setPasswordMessage('Da doi mat khau thanh cong.');
-    setPasswordForm({
-      currentPassword: '',
-      newPassword: '',
-      confirmPassword: '',
-    });
+    setPasswordSaving(true);
+    try {
+      await updateTeacherPassword({
+        currentPassword: passwordForm.currentPassword,
+        newPassword: passwordForm.newPassword,
+      });
+      setPasswordMessage('Da doi mat khau thanh cong.');
+      setPasswordForm({
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: '',
+      });
+    } catch (requestError) {
+      setPasswordMessage(
+        requestError?.response?.data?.message || requestError?.message || 'Khong the doi mat khau.'
+      );
+    } finally {
+      setPasswordSaving(false);
+    }
   };
 
   const jumpToSection = (sectionKey, classCode) => {
@@ -1007,14 +1107,17 @@ const TeacherDashboard = ({ user, onLogout }) => {
         <SectionPanel title="Phan bo xep loai lop">
           <div className="h-[320px]">
             <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie data={levelDistribution} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={68} outerRadius={105} paddingAngle={4}>
+              <BarChart data={levelDistribution} barCategoryGap={24}>
+                <CartesianGrid strokeDasharray="4 4" vertical={false} />
+                <XAxis dataKey="name" tickLine={false} axisLine={false} />
+                <YAxis allowDecimals={false} tickLine={false} axisLine={false} />
+                <Tooltip />
+                <Bar dataKey="value" radius={[12, 12, 0, 0]}>
                   {levelDistribution.map((entry) => (
                     <Cell key={entry.name} fill={entry.color} />
                   ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
+                </Bar>
+              </BarChart>
             </ResponsiveContainer>
           </div>
         </SectionPanel>
@@ -1269,13 +1372,13 @@ const TeacherDashboard = ({ user, onLogout }) => {
         <SectionPanel title="Progress chart tien do sinh vien">
           <div className="h-[260px]">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={historyChartData}>
+              <BarChart data={historyChartData} barCategoryGap={24}>
                 <CartesianGrid strokeDasharray="4 4" vertical={false} />
                 <XAxis dataKey="label" tickLine={false} axisLine={false} />
                 <YAxis domain={[0, 10]} tickLine={false} axisLine={false} />
                 <Tooltip />
-                <Line type="monotone" dataKey="score" stroke="#10b981" strokeWidth={3} dot={{ r: 4 }} />
-              </LineChart>
+                <Bar dataKey="score" fill="#10b981" radius={[12, 12, 0, 0]} />
+              </BarChart>
             </ResponsiveContainer>
           </div>
         </SectionPanel>
@@ -1456,13 +1559,13 @@ const TeacherDashboard = ({ user, onLogout }) => {
         <SectionPanel title="Xu huong tien bo ky nang mem">
           <div className="h-[280px]">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={reportTrendData}>
+              <BarChart data={reportTrendData} barCategoryGap={24}>
                 <CartesianGrid strokeDasharray="4 4" vertical={false} />
                 <XAxis dataKey="name" tickLine={false} axisLine={false} />
                 <YAxis domain={[0, 10]} tickLine={false} axisLine={false} />
                 <Tooltip />
-                <Line type="monotone" dataKey="score" stroke="#10b981" strokeWidth={3} dot={{ r: 4 }} />
-              </LineChart>
+                <Bar dataKey="score" fill="#10b981" radius={[12, 12, 0, 0]} />
+              </BarChart>
             </ResponsiveContainer>
           </div>
         </SectionPanel>
@@ -1487,14 +1590,17 @@ const TeacherDashboard = ({ user, onLogout }) => {
           <div className="grid gap-6 lg:grid-cols-[300px_minmax(0,1fr)]">
             <div className="h-[240px]">
               <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie data={completionData} dataKey="value" nameKey="name" innerRadius={55} outerRadius={90}>
+                <BarChart data={completionData} barCategoryGap={24}>
+                  <CartesianGrid strokeDasharray="4 4" vertical={false} />
+                  <XAxis dataKey="name" tickLine={false} axisLine={false} />
+                  <YAxis allowDecimals={false} tickLine={false} axisLine={false} />
+                  <Tooltip />
+                  <Bar dataKey="value" radius={[12, 12, 0, 0]}>
                     {completionData.map((item) => (
                       <Cell key={item.name} fill={item.color} />
                     ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
+                  </Bar>
+                </BarChart>
               </ResponsiveContainer>
             </div>
             <div className="grid gap-3">
@@ -1630,9 +1736,17 @@ const TeacherDashboard = ({ user, onLogout }) => {
                 className={inputClassName}
               />
             </label>
-            {profileMessage ? <p className="text-sm font-semibold text-emerald-700">{profileMessage}</p> : null}
-            <button type="submit" className={primaryButtonClassName}>
-              Cap nhat ho so
+            {profileMessage ? (
+              <p
+                className={`text-sm font-semibold ${
+                  profileMessage.startsWith('Da') ? 'text-emerald-700' : 'text-red-600'
+                }`}
+              >
+                {profileMessage}
+              </p>
+            ) : null}
+            <button type="submit" disabled={profileSaving} className={primaryButtonClassName}>
+              {profileSaving ? 'Dang cap nhat...' : 'Cap nhat ho so'}
             </button>
           </form>
         </SectionPanel>
@@ -1667,9 +1781,17 @@ const TeacherDashboard = ({ user, onLogout }) => {
               className={inputClassName}
             />
           </label>
-          {passwordMessage ? <p className="text-sm font-semibold text-emerald-700">{passwordMessage}</p> : null}
-          <button type="submit" className={primaryButtonClassName}>
-            Doi mat khau
+          {passwordMessage ? (
+            <p
+              className={`text-sm font-semibold ${
+                passwordMessage.startsWith('Da') ? 'text-emerald-700' : 'text-red-600'
+              }`}
+            >
+              {passwordMessage}
+            </p>
+          ) : null}
+          <button type="submit" disabled={passwordSaving} className={primaryButtonClassName}>
+            {passwordSaving ? 'Dang doi...' : 'Doi mat khau'}
           </button>
         </form>
       </SectionPanel>

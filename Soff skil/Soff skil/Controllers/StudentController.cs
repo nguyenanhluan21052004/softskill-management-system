@@ -11,13 +11,16 @@ namespace Soff_skil.Controllers;
 public class StudentController : ControllerBase
 {
     private readonly IStudentService _studentService;
+    private readonly ISoftSkillService _softSkillService;
     private readonly ILogger<StudentController> _logger;
 
     public StudentController(
         IStudentService studentService,
+        ISoftSkillService softSkillService,
         ILogger<StudentController> logger)
     {
         _studentService = studentService;
+        _softSkillService = softSkillService;
         _logger = logger;
     }
 
@@ -46,6 +49,91 @@ public class StudentController : ControllerBase
         }
 
         return Ok(profile);
+    }
+
+    [Authorize]
+    [HttpPut("profile")]
+    public async Task<ActionResult<StudentProfileDto>> UpdateProfile(
+        [FromBody] UpdateStudentProfileRequestDto request,
+        CancellationToken cancellationToken)
+    {
+        if (!ModelState.IsValid)
+        {
+            return ValidationProblem(ModelState);
+        }
+
+        var claimValue =
+            User.FindFirst("id")?.Value
+            ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (!int.TryParse(claimValue, out var userId))
+        {
+            return Unauthorized("Invalid token: missing user id.");
+        }
+
+        var profile = await _studentService.UpdateProfileByUserIdAsync(userId, request, cancellationToken);
+
+        if (profile == null)
+        {
+            return NotFound("Student not found");
+        }
+
+        return Ok(profile);
+    }
+
+    [Authorize]
+    [HttpPut("password")]
+    public async Task<IActionResult> UpdatePassword(
+        [FromBody] UpdateStudentPasswordRequestDto request,
+        CancellationToken cancellationToken)
+    {
+        if (!ModelState.IsValid)
+        {
+            return ValidationProblem(ModelState);
+        }
+
+        var claimValue =
+            User.FindFirst("id")?.Value
+            ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (!int.TryParse(claimValue, out var userId))
+        {
+            return Unauthorized("Invalid token: missing user id.");
+        }
+
+        try
+        {
+            await _studentService.UpdatePasswordByUserIdAsync(userId, request, cancellationToken);
+            return Ok(new { message = "Password updated successfully." });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [Authorize(Roles = "student,Student")]
+    [HttpGet("evaluations")]
+    public async Task<ActionResult<IReadOnlyList<CreateEvaluationDto>>> GetMyEvaluations(
+        CancellationToken cancellationToken)
+    {
+        var claimValue =
+            User.FindFirst("id")?.Value
+            ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (!int.TryParse(claimValue, out var userId))
+        {
+            return Unauthorized("Invalid token: missing user id.");
+        }
+
+        var profile = await _studentService.GetStudentProfileAsync(userId, cancellationToken);
+        if (profile == null)
+        {
+            return NotFound("Student not found");
+        }
+
+        var results = await _softSkillService.GetEvaluationsByStudentAsync(profile.StudentId, cancellationToken);
+        return Ok(results);
     }
 
     // =========================================

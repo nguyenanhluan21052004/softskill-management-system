@@ -1,12 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
+  Bar,
+  BarChart,
   CartesianGrid,
-  Line,
-  LineChart,
-  PolarAngleAxis,
-  PolarGrid,
-  Radar,
-  RadarChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -15,7 +11,14 @@ import {
 import DashboardFrame from '../components/dashboard/DashboardFrame';
 import ErrorState from '../components/ui/ErrorState';
 import Spinner from '../components/ui/Spinner';
-import { getCurrentStudent, getStudentEvaluations, getStudentProgress, getStudentRecommendations } from '../services/api';
+import {
+  getCurrentStudent,
+  getStudentEvaluations,
+  getStudentProgress,
+  getStudentRecommendations,
+  updateStudentPassword,
+  updateStudentProfile,
+} from '../services/api';
 
 const STUDENT_MENU = [
   'Tong quan',
@@ -58,10 +61,23 @@ const getSkillValue = (data, key, fallback) => {
   const direct = parseNumber(data?.[key], NaN);
   if (Number.isFinite(direct)) return clamp(direct, 0, 10);
 
+  const pascalKey = `${key.charAt(0).toUpperCase()}${key.slice(1)}`;
+  const pascalValue = parseNumber(data?.[pascalKey], NaN);
+  if (Number.isFinite(pascalValue)) return clamp(pascalValue, 0, 10);
+
   const scoreVariant = parseNumber(data?.[`${key}Score`], NaN);
   if (Number.isFinite(scoreVariant)) return clamp(scoreVariant, 0, 10);
 
   return clamp(fallback, 0, 10);
+};
+
+const getDetailSkillScore = (details, label) => {
+  if (!Array.isArray(details)) return NaN;
+  const match = details.find((item) => {
+    const type = (item.skillType || item.SkillType || '').toLowerCase();
+    return type === label.toLowerCase();
+  });
+  return parseNumber(match?.score ?? match?.Score, NaN);
 };
 
 const StudentPage = ({ user, onLogout }) => {
@@ -70,6 +86,14 @@ const StudentPage = ({ user, onLogout }) => {
   const [history, setHistory] = useState([]);
   const [progressData, setProgressData] = useState(null);
   const [recommendations, setRecommendations] = useState([]);
+  const [profileForm, setProfileForm] = useState({
+    name: '',
+    email: '',
+    currentPassword: '',
+    newPassword: '',
+  });
+  const [profileMessage, setProfileMessage] = useState('');
+  const [profileSaving, setProfileSaving] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -81,7 +105,12 @@ const StudentPage = ({ user, onLogout }) => {
       try {
         const response = await getCurrentStudent();
         const data = response?.data || {};
-        const studentId = data.id || data.studentId || user?.id || 'student';
+        const studentId =
+          data.studentId ||
+          data.StudentId ||
+          data.id ||
+          user?.id ||
+          'student';
 
         const [historyResponse, progressResponse, recommendationResponse] = await Promise.all([
           getStudentEvaluations(studentId),
@@ -95,10 +124,29 @@ const StudentPage = ({ user, onLogout }) => {
 
         const overallScore = parseNumber(data.score ?? data.result ?? data.softSkillScore ?? latestEvaluation?.finalScore, 0);
         const skillScores = SKILLS.reduce((acc, skill) => {
-          const evaluationValue = parseNumber(latestEvaluation?.[skill.key], NaN);
-          acc[skill.key] = Number.isFinite(evaluationValue)
-            ? clamp(evaluationValue, 0, 10)
-            : getSkillValue(data, skill.key, overallScore);
+          const details = latestEvaluation?.details || latestEvaluation?.Details || [];
+          const detailValue = getDetailSkillScore(details, skill.label);
+          const evalValue = getSkillValue(latestEvaluation, skill.key, NaN);
+          const evaluationTotal = parseNumber(
+            latestEvaluation?.finalScore ??
+              latestEvaluation?.FinalScore ??
+              latestEvaluation?.softSkillScore ??
+              latestEvaluation?.score,
+            NaN
+          );
+          const shouldFallbackToTotal =
+            Number.isFinite(evalValue) &&
+            evalValue === 0 &&
+            !details.length &&
+            Number.isFinite(evaluationTotal) &&
+            evaluationTotal > 0;
+
+          const mergedValue = Number.isFinite(detailValue)
+            ? detailValue
+            : Number.isFinite(evalValue) && !shouldFallbackToTotal
+              ? evalValue
+              : getSkillValue(data, skill.key, overallScore);
+          acc[skill.key] = clamp(mergedValue, 0, 10);
           return acc;
         }, {});
 
@@ -109,11 +157,24 @@ const StudentPage = ({ user, onLogout }) => {
         const recommendationList = Array.isArray(recommendationResponse?.data) ? recommendationResponse.data : [];
         const primaryRecommendation = recommendationList[0];
 
+        const storedEmail =
+          typeof window !== 'undefined'
+            ? window.localStorage.getItem(`ss_student_email_${studentId}`)
+            : null;
+
+        const studentName = data.studentName || data.StudentName || data.name || user?.name || 'Sinh vien';
+        const studentEmail = storedEmail || data.email || '';
+        const studentClassName = data.className || data.ClassName || data.classCode || data.ClassCode || 'KTPM2022';
+        const teacherName = data.teacherName || data.TeacherName || data.teacher || 'Nguyen Van A';
+
         setStudent({
           id: studentId,
-          name: data.studentName || data.name || user?.name || 'Sinh vien',
+          name: studentName,
+          email: studentEmail,
+          className: studentClassName,
+          teacherName,
           score: overallScore,
-          level: data.level || progressPayload?.level || levelFromScore(overallScore),
+          level: data.level || data.Level || progressPayload?.level || levelFromScore(overallScore),
           rank: latestTracking?.rank ? `${latestTracking.rank}/${tracking.length || 45}` : data.rank || '2/45',
           progress: parseNumber(data.progress ?? 0.35, 0.35),
           semester: data.semester || 'Hoc ky 2 (2024-2025)',
@@ -122,6 +183,11 @@ const StudentPage = ({ user, onLogout }) => {
           recommendation:
             primaryRecommendation?.suggestion || RECOMMENDATION_MAP[weakestSkill?.key] || RECOMMENDATION_MAP.timeManagement,
         });
+        setProfileForm((current) => ({
+          ...current,
+          name: studentName,
+          email: studentEmail,
+        }));
         setHistory(sortedHistory);
         setProgressData(progressPayload);
         setRecommendations(recommendationList);
@@ -190,6 +256,63 @@ const StudentPage = ({ user, onLogout }) => {
     []
   );
 
+  const handleProfileUpdate = async (event) => {
+    event.preventDefault();
+    setProfileMessage('');
+
+    if (!profileForm.name.trim()) {
+      setProfileMessage('Vui long nhap ho ten.');
+      return;
+    }
+
+    if (profileForm.newPassword && profileForm.newPassword.length < 6) {
+      setProfileMessage('Mat khau moi can toi thieu 6 ky tu.');
+      return;
+    }
+
+    if (profileForm.newPassword && !profileForm.currentPassword) {
+      setProfileMessage('Vui long nhap mat khau hien tai.');
+      return;
+    }
+
+    setProfileSaving(true);
+    try {
+      const response = await updateStudentProfile({ name: profileForm.name.trim() });
+      const updated = response?.data || {};
+
+      setStudent((current) => ({
+        ...current,
+        name: updated.studentName || profileForm.name,
+        email: profileForm.email.trim(),
+      }));
+
+      if (typeof window !== 'undefined' && student?.id) {
+        window.localStorage.setItem(`ss_student_email_${student.id}`, profileForm.email.trim());
+      }
+
+      if (profileForm.newPassword) {
+        await updateStudentPassword({
+          currentPassword: profileForm.currentPassword,
+          newPassword: profileForm.newPassword,
+        });
+      }
+
+      setProfileForm((current) => ({
+        ...current,
+        currentPassword: '',
+        newPassword: '',
+      }));
+
+      setProfileMessage('Da cap nhat thong tin tai khoan.');
+    } catch (requestError) {
+      setProfileMessage(
+        requestError?.response?.data?.message || requestError?.message || 'Khong the cap nhat thong tin.'
+      );
+    } finally {
+      setProfileSaving(false);
+    }
+  };
+
   if (loading) {
     return <Spinner label="Dang tai dashboard sinh vien..." />;
   }
@@ -227,12 +350,13 @@ const StudentPage = ({ user, onLogout }) => {
                   <h3 className="text-lg font-extrabold text-slate-900">Diem theo ky nang</h3>
                   <div className="mt-4 h-[320px]">
                     <ResponsiveContainer width="100%" height="100%">
-                      <RadarChart data={radarData}>
-                        <PolarGrid />
-                        <PolarAngleAxis dataKey="subject" />
-                        <Radar dataKey="value" stroke="#8b5cf6" fill="#c4b5fd" fillOpacity={0.6} />
+                      <BarChart data={radarData} barCategoryGap={24}>
+                        <CartesianGrid strokeDasharray="4 4" vertical={false} />
+                        <XAxis dataKey="subject" tickLine={false} axisLine={false} />
+                        <YAxis domain={[0, 100]} tickLine={false} axisLine={false} />
                         <Tooltip />
-                      </RadarChart>
+                        <Bar dataKey="value" fill="#8b5cf6" radius={[12, 12, 0, 0]} />
+                      </BarChart>
                     </ResponsiveContainer>
                   </div>
                 </article>
@@ -241,13 +365,13 @@ const StudentPage = ({ user, onLogout }) => {
                   <h3 className="text-lg font-extrabold text-slate-900">Xu huong diem trung binh</h3>
                   <div className="mt-4 h-[320px]">
                     <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={trendData}>
+                      <BarChart data={trendData} barCategoryGap={24}>
                         <CartesianGrid strokeDasharray="4 4" vertical={false} />
                         <XAxis dataKey="label" tickLine={false} axisLine={false} />
                         <YAxis domain={[0, 10]} tickLine={false} axisLine={false} />
                         <Tooltip />
-                        <Line type="monotone" dataKey="score" stroke="#7c3aed" strokeWidth={3} dot={{ r: 4 }} />
-                      </LineChart>
+                        <Bar dataKey="score" fill="#7c3aed" radius={[12, 12, 0, 0]} />
+                      </BarChart>
                     </ResponsiveContainer>
                   </div>
                 </article>
@@ -335,13 +459,13 @@ const StudentPage = ({ user, onLogout }) => {
                 <h3 className="text-lg font-extrabold text-slate-900">Tien do theo tuan</h3>
                 <div className="mt-4 h-[320px]">
                   <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={trendData}>
+                    <BarChart data={trendData} barCategoryGap={24}>
                       <CartesianGrid strokeDasharray="4 4" vertical={false} />
                       <XAxis dataKey="label" tickLine={false} axisLine={false} />
                       <YAxis domain={[0, 10]} tickLine={false} axisLine={false} />
                       <Tooltip />
-                      <Line type="monotone" dataKey="score" stroke="#7c3aed" strokeWidth={3} dot={{ r: 4 }} />
-                    </LineChart>
+                      <Bar dataKey="score" fill="#7c3aed" radius={[12, 12, 0, 0]} />
+                    </BarChart>
                   </ResponsiveContainer>
                 </div>
               </article>
@@ -349,7 +473,7 @@ const StudentPage = ({ user, onLogout }) => {
                 <h3 className="text-lg font-extrabold text-slate-900">So sanh giua cac hoc ky</h3>
                 <div className="mt-4 h-[320px]">
                   <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={[
+                    <BarChart data={[
                       { label: 'HK1', score: Math.max(6.8, student.score - 0.4) },
                       { label: 'HK2', score: Math.max(7.1, student.score - 0.15) },
                       { label: 'HK3', score: student.score },
@@ -358,8 +482,8 @@ const StudentPage = ({ user, onLogout }) => {
                       <XAxis dataKey="label" tickLine={false} axisLine={false} />
                       <YAxis domain={[0, 10]} tickLine={false} axisLine={false} />
                       <Tooltip />
-                      <Line type="monotone" dataKey="score" stroke="#9333ea" strokeWidth={3} dot={{ r: 4 }} />
-                    </LineChart>
+                      <Bar dataKey="score" fill="#9333ea" radius={[12, 12, 0, 0]} />
+                    </BarChart>
                   </ResponsiveContainer>
                 </div>
               </article>
@@ -489,12 +613,52 @@ const StudentPage = ({ user, onLogout }) => {
               </article>
               <article className="rounded-[28px] border border-violet-100 bg-white/95 p-6 shadow-[0_18px_50px_-35px_rgba(76,29,149,0.35)]">
                 <h3 className="text-lg font-extrabold text-slate-900">Cap nhat tai khoan</h3>
-                <div className="mt-4 grid gap-3">
-                  <input className="rounded-2xl border border-violet-100 bg-white px-4 py-3 text-sm" placeholder="Ho ten" />
-                  <input className="rounded-2xl border border-violet-100 bg-white px-4 py-3 text-sm" placeholder="Email" />
-                  <input className="rounded-2xl border border-violet-100 bg-white px-4 py-3 text-sm" placeholder="Mat khau moi" />
-                  <button className="rounded-2xl bg-violet-600 px-4 py-3 text-sm font-semibold text-white">Cap nhat</button>
-                </div>
+                <form onSubmit={handleProfileUpdate} className="mt-4 grid gap-3">
+                  <input
+                    value={profileForm.name}
+                    onChange={(event) => setProfileForm((current) => ({ ...current, name: event.target.value }))}
+                    className="rounded-2xl border border-violet-100 bg-white px-4 py-3 text-sm"
+                    placeholder="Ho ten"
+                  />
+                  <input
+                    value={profileForm.email}
+                    onChange={(event) => setProfileForm((current) => ({ ...current, email: event.target.value }))}
+                    className="rounded-2xl border border-violet-100 bg-white px-4 py-3 text-sm"
+                    placeholder="Email"
+                  />
+                  <input
+                    type="password"
+                    value={profileForm.currentPassword}
+                    onChange={(event) =>
+                      setProfileForm((current) => ({ ...current, currentPassword: event.target.value }))
+                    }
+                    className="rounded-2xl border border-violet-100 bg-white px-4 py-3 text-sm"
+                    placeholder="Mat khau hien tai"
+                  />
+                  <input
+                    type="password"
+                    value={profileForm.newPassword}
+                    onChange={(event) => setProfileForm((current) => ({ ...current, newPassword: event.target.value }))}
+                    className="rounded-2xl border border-violet-100 bg-white px-4 py-3 text-sm"
+                    placeholder="Mat khau moi"
+                  />
+                  {profileMessage ? (
+                    <p
+                      className={`text-sm font-semibold ${
+                        profileMessage.startsWith('Da') ? 'text-emerald-600' : 'text-red-600'
+                      }`}
+                    >
+                      {profileMessage}
+                    </p>
+                  ) : null}
+                  <button
+                    type="submit"
+                    disabled={profileSaving}
+                    className="rounded-2xl bg-violet-600 px-4 py-3 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {profileSaving ? 'Dang cap nhat...' : 'Cap nhat'}
+                  </button>
+                </form>
               </article>
             </section>
           );

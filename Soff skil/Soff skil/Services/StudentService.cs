@@ -32,6 +32,8 @@ public class StudentService : IStudentService
                 {
                     student.Id,
                     student.Name,
+                    student.ClassCode,
+                    ClassName = classroom != null ? classroom.Name : null,
                     TeacherName = teacher != null ? teacher.Name : string.Empty,
                     LatestScore = student.ProgressTrackings
                         .OrderByDescending(p => p.WeekNumber)
@@ -54,6 +56,8 @@ public class StudentService : IStudentService
                 {
                     student.Id,
                     student.Name,
+                    student.ClassCode,
+                    ClassName = classroom != null ? classroom.Name : null,
                     TeacherName = teacher != null ? teacher.Name : string.Empty,
                     LatestScore = (double?)0
                 }).SingleOrDefaultAsync(cancellationToken);
@@ -71,8 +75,46 @@ public class StudentService : IStudentService
             StudentId = profile.Id,
             StudentName = profile.Name,
             TeacherName = profile.TeacherName,
+            ClassCode = profile.ClassCode,
+            ClassName = profile.ClassName,
             Score = SoftSkillCalculator.NormalizeDashboardScore(score),
             Level = SoftSkillCalculator.ClassifyLevel(score)
         };
+    }
+
+    public async Task<StudentProfileDto?> UpdateProfileByUserIdAsync(
+        int userId,
+        UpdateStudentProfileRequestDto request,
+        CancellationToken cancellationToken = default)
+    {
+        var student = await _dbContext.Students
+            .FirstOrDefaultAsync(s => s.UserId == userId, cancellationToken);
+
+        if (student == null)
+        {
+            return null;
+        }
+
+        student.Name = request.Name.Trim();
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+        return await GetStudentProfileAsync(userId, cancellationToken);
+    }
+
+    public async Task UpdatePasswordByUserIdAsync(
+        int userId,
+        UpdateStudentPasswordRequestDto request,
+        CancellationToken cancellationToken = default)
+    {
+        var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId, cancellationToken)
+            ?? throw new InvalidOperationException("User not found.");
+
+        if (!PasswordHasher.VerifyPassword(request.CurrentPassword, user.Password))
+        {
+            throw new InvalidOperationException("Current password is incorrect.");
+        }
+
+        user.Password = PasswordHasher.HashPassword(request.NewPassword);
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }

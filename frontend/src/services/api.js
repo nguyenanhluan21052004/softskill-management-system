@@ -59,6 +59,7 @@ const toArrayPayload = (payload) => {
   if (Array.isArray(payload?.data)) return payload.data;
   if (Array.isArray(payload?.results)) return payload.results;
   if (Array.isArray(payload?.items)) return payload.items;
+  if (Array.isArray(payload?.Items)) return payload.Items;
   if (Array.isArray(payload?.students)) return payload.students;
   return [];
 };
@@ -105,7 +106,16 @@ export const clearApiCache = () => {
 };
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('ss_token');
+  let token = localStorage.getItem('ss_token');
+
+  if (!token) {
+    try {
+      const storedUser = JSON.parse(localStorage.getItem('ss_user') || 'null');
+      token = storedUser?.token || '';
+    } catch (_error) {
+      token = '';
+    }
+  }
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -122,6 +132,29 @@ export const login = (credentials) =>
 
 export const getCurrentStudent = () => getFirstSuccessful(['/api/Student/me', '/api/student/me']);
 export const getCurrentTeacher = () => getFirstSuccessful(['/api/Teacher/me', '/api/teacher/me']);
+export const updateTeacherProfile = (payload) =>
+  getFirstSuccessful([
+    { path: '/api/teacher/profile', method: 'put', data: payload },
+    { path: '/api/Teacher/profile', method: 'put', data: payload },
+  ]);
+
+export const updateTeacherPassword = (payload) =>
+  getFirstSuccessful([
+    { path: '/api/teacher/password', method: 'put', data: payload },
+    { path: '/api/Teacher/password', method: 'put', data: payload },
+  ]);
+
+export const updateStudentProfile = (payload) =>
+  getFirstSuccessful([
+    { path: '/api/student/profile', method: 'put', data: payload },
+    { path: '/api/Student/profile', method: 'put', data: payload },
+  ]);
+
+export const updateStudentPassword = (payload) =>
+  getFirstSuccessful([
+    { path: '/api/student/password', method: 'put', data: payload },
+    { path: '/api/Student/password', method: 'put', data: payload },
+  ]);
 
 const readLocalJson = (key, fallbackValue) => {
   try {
@@ -167,31 +200,61 @@ export const createTeacherAccount = (payload) =>
   getFirstSuccessful([
     { path: '/api/admin/teachers', method: 'post', data: payload },
     { path: '/api/Admin/teachers', method: 'post', data: payload },
-  ]);
+  ]).then((response) => {
+    clearApiCache();
+    return response;
+  });
+
+export const updateTeacherAccount = (teacherId, payload) =>
+  getFirstSuccessful([
+    { path: `/api/admin/teachers/${teacherId}`, method: 'put', data: payload },
+    { path: `/api/Admin/teachers/${teacherId}`, method: 'put', data: payload },
+  ]).then((response) => {
+    clearApiCache();
+    return response;
+  });
 
 export const createStudentAccount = (payload) =>
   getFirstSuccessful([
     { path: '/api/admin/students', method: 'post', data: payload },
     { path: '/api/Admin/students', method: 'post', data: payload },
-  ]);
+  ]).then((response) => {
+    clearApiCache();
+    return response;
+  });
+
+export const updateStudentAccount = (studentId, payload) =>
+  getFirstSuccessful([
+    { path: `/api/admin/students/${studentId}`, method: 'put', data: payload },
+    { path: `/api/Admin/students/${studentId}`, method: 'put', data: payload },
+  ]).then((response) => {
+    clearApiCache();
+    return response;
+  });
 
 export const deleteTeacherAccount = (teacherId) =>
   getFirstSuccessful([
     { path: `/api/admin/teachers/${teacherId}`, method: 'delete' },
     { path: `/api/Admin/teachers/${teacherId}`, method: 'delete' },
-  ]);
+  ]).then((response) => {
+    clearApiCache();
+    return response;
+  });
 
 export const deleteStudentAccount = (studentId) =>
   getFirstSuccessful([
     { path: `/api/admin/students/${studentId}`, method: 'delete' },
     { path: `/api/Admin/students/${studentId}`, method: 'delete' },
-  ]);
+  ]).then((response) => {
+    clearApiCache();
+    return response;
+  });
 
 export const getClassrooms = async () => {
   const backendResponse = await tryGetFirstSuccessful([
+    '/api/classes',
     '/api/admin/classes',
     '/api/Admin/classes',
-    '/api/classes',
   ]);
 
   if (backendResponse) {
@@ -204,6 +267,18 @@ export const getClassrooms = async () => {
 };
 
 export const upsertClassroom = async (payload) => {
+  const classId = payload.id || payload.classId;
+  const updateRequest = classId
+    ? await tryGetFirstSuccessful([
+      { path: `/api/admin/classes/${classId}`, method: 'put', data: payload },
+      { path: `/api/Admin/classes/${classId}`, method: 'put', data: payload },
+    ])
+    : null;
+
+  if (updateRequest) {
+    return updateRequest;
+  }
+
   const backendResponse = await tryGetFirstSuccessful([
     { path: '/api/admin/classes', method: 'post', data: payload },
     { path: '/api/Admin/classes', method: 'post', data: payload },
@@ -234,7 +309,9 @@ export const upsertClassroom = async (payload) => {
 
 export const assignTeacherToClassroom = async ({ classId, teacherId, teacherName }) => {
   const backendResponse = await tryGetFirstSuccessful([
+    { path: `/api/admin/classes/${classId}/teacher`, method: 'patch', data: { teacherId } },
     { path: `/api/admin/classes/${classId}/assign-teacher`, method: 'post', data: { teacherId } },
+    { path: `/api/Admin/classes/${classId}/teacher`, method: 'patch', data: { teacherId } },
     { path: `/api/Admin/classes/${classId}/assign-teacher`, method: 'post', data: { teacherId } },
   ]);
 
@@ -271,6 +348,19 @@ export const getAdminEvaluations = async () => {
   return { data: [] };
 };
 
+export const backfillEvaluationDetails = async ({ overwrite = false } = {}) => {
+  const backendResponse = await tryGetFirstSuccessful([
+    { path: `/api/admin/evaluations/backfill?overwrite=${overwrite}`, method: 'post' },
+    { path: `/api/Admin/evaluations/backfill?overwrite=${overwrite}`, method: 'post' },
+  ]);
+
+  if (backendResponse) {
+    return backendResponse;
+  }
+
+  return { data: null };
+};
+
 export const getStudentRecommendations = async (studentId) => {
   const backendResponse = await tryGetFirstSuccessful([
     `/api/Recommendation/student/${studentId}`,
@@ -297,6 +387,8 @@ export const getStudentProgress = async (studentId) => {
 
 export const getStudentEvaluations = async (studentId) => {
   const backendResponse = await tryGetFirstSuccessful([
+    '/api/student/evaluations',
+    '/api/Student/evaluations',
     `/api/evaluations/student/${studentId}`,
     `/api/Evaluation/student/${studentId}`,
     `/api/admin/evaluations/student/${studentId}`,
@@ -312,10 +404,31 @@ export const getStudentEvaluations = async (studentId) => {
   return { data: all[String(studentId)] || [] };
 };
 
-export const saveStudentEvaluation = async ({ studentId, payload }) => {
+const buildEvaluationCreatePayload = ({ studentId, payload, evaluatorId, evaluatorType }) => {
+  const weekNumber = Number(payload?.weekOrder ?? payload?.week ?? 0);
+
+  return {
+    studentId,
+    evaluatorId: evaluatorId ?? payload?.evaluatorId ?? 0,
+    evaluatorType: evaluatorType ?? payload?.evaluatorType ?? 'teacher',
+    weekNumber,
+    evaluationDate: payload?.updatedAt || new Date().toISOString(),
+    attendance: payload?.attendance ?? 0,
+    assignment: payload?.assignment ?? 0,
+    presentation: payload?.presentation ?? 0,
+    project: payload?.project ?? 0,
+    peerReview: payload?.peerReview ?? 0,
+    teamContribution: payload?.teamContribution ?? 0,
+    teacherComment: payload?.comment ?? '',
+  };
+};
+
+export const saveStudentEvaluation = async ({ studentId, payload, evaluatorId, evaluatorType }) => {
+  const createPayload = buildEvaluationCreatePayload({ studentId, payload, evaluatorId, evaluatorType });
+
   const backendResponse = await tryGetFirstSuccessful([
-    { path: `/api/teacher/students/${studentId}/evaluations`, method: 'post', data: payload },
-    { path: `/api/Teacher/students/${studentId}/evaluations`, method: 'post', data: payload },
+    { path: '/api/evaluations/create', method: 'post', data: createPayload },
+    { path: '/api/Evaluation/create', method: 'post', data: createPayload },
   ]);
 
   if (backendResponse) {
@@ -379,6 +492,8 @@ export const getTopStudents = (limit = 5) =>
         `/api/SoftSkill/top?limit=${limit}`,
         `/api/SoftSkill/top?count=${limit}`,
         '/api/SoftSkill/top',
+        `/api/Dashboard/top-students?limit=${limit}`,
+        `/api/dashboard/top-students?limit=${limit}`,
         `/api/results/top-students?limit=${limit}`,
         `/api/results/top?count=${limit}`,
         `/api/top-students?limit=${limit}`,
@@ -403,6 +518,8 @@ export const getStatistics = () =>
     async () => {
       const directResponse = await tryGetFirstSuccessful([
         '/api/SoftSkill/statistics',
+        '/api/Dashboard/statistics',
+        '/api/dashboard/statistics',
         '/api/results/statistics',
         '/api/statistics',
         '/api/results/summary',

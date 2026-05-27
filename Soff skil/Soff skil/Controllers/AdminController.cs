@@ -105,11 +105,131 @@ public class AdminController : ControllerBase
         return Ok(teachers);
     }
 
+    [HttpPost("teachers")]
+    [Authorize(Roles = "admin,Admin")]
+    public async Task<ActionResult<AdminAccountOptionDto>> CreateTeacher(
+        [FromBody] CreateTeacherRequestDto request,
+        CancellationToken cancellationToken)
+    {
+        if (!ModelState.IsValid)
+        {
+            return ValidationProblem(ModelState);
+        }
+
+        try
+        {
+            var result = await _adminService.CreateTeacherAsync(request, cancellationToken);
+            return Ok(result);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPut("teachers/{teacherId:int}")]
+    [Authorize(Roles = "admin,Admin")]
+    public async Task<ActionResult<AdminAccountOptionDto>> UpdateTeacher(
+        int teacherId,
+        [FromBody] UpdateTeacherRequestDto request,
+        CancellationToken cancellationToken)
+    {
+        if (!ModelState.IsValid)
+        {
+            return ValidationProblem(ModelState);
+        }
+
+        try
+        {
+            var result = await _adminService.UpdateTeacherAsync(teacherId, request, cancellationToken);
+            return Ok(result);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpDelete("teachers/{teacherId:int}")]
+    [Authorize(Roles = "admin,Admin")]
+    public async Task<IActionResult> DeleteTeacher(int teacherId, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await _adminService.DeleteTeacherAsync(teacherId, cancellationToken);
+            return NoContent();
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
     [HttpGet("students")]
     public async Task<ActionResult<IReadOnlyList<AdminAccountOptionDto>>> GetStudents(CancellationToken cancellationToken)
     {
         var students = await _adminService.GetStudentsAsync(cancellationToken);
         return Ok(students);
+    }
+
+    [HttpPost("students")]
+    [Authorize(Roles = "admin,Admin")]
+    public async Task<ActionResult<AdminAccountOptionDto>> CreateStudent(
+        [FromBody] CreateStudentRequestDto request,
+        CancellationToken cancellationToken)
+    {
+        if (!ModelState.IsValid)
+        {
+            return ValidationProblem(ModelState);
+        }
+
+        try
+        {
+            var result = await _adminService.CreateStudentAsync(request, cancellationToken);
+            return Ok(result);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPut("students/{studentId:int}")]
+    [Authorize(Roles = "admin,Admin")]
+    public async Task<ActionResult<AdminAccountOptionDto>> UpdateStudent(
+        int studentId,
+        [FromBody] UpdateStudentRequestDto request,
+        CancellationToken cancellationToken)
+    {
+        if (!ModelState.IsValid)
+        {
+            return ValidationProblem(ModelState);
+        }
+
+        try
+        {
+            var result = await _adminService.UpdateStudentAsync(studentId, request, cancellationToken);
+            return Ok(result);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpDelete("students/{studentId:int}")]
+    [Authorize(Roles = "admin,Admin")]
+    public async Task<IActionResult> DeleteStudent(int studentId, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await _adminService.DeleteStudentAsync(studentId, cancellationToken);
+            return NoContent();
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     [HttpPost("classes")]
@@ -174,6 +294,24 @@ public class AdminController : ControllerBase
         catch (InvalidOperationException ex)
         {
             return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPost("evaluations/backfill")]
+    [Authorize(Roles = "admin,Admin")]
+    public async Task<ActionResult<BackfillEvaluationResponseDto>> BackfillEvaluationDetails(
+        [FromQuery] bool overwrite,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            var result = await _adminService.BackfillEvaluationDetailsAsync(overwrite, cancellationToken);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error while backfilling evaluation details.");
+            return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred.");
         }
     }
 

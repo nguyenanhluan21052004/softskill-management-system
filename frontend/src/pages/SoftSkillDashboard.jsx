@@ -100,15 +100,15 @@ const getSkillFromPayload = (student, skillKey) => {
 const normalizeLevel = (level) => {
   const safeLevel = String(level || '').trim().toLowerCase();
 
-  if (safeLevel === 'good') {
+  if (safeLevel === 'good' || safeLevel === 'tot' || safeLevel === 'tốt') {
     return 'Good';
   }
 
-  if (safeLevel === 'average') {
+  if (safeLevel === 'average' || safeLevel === 'trung binh' || safeLevel === 'trung bình') {
     return 'Average';
   }
 
-  if (safeLevel === 'weak') {
+  if (safeLevel === 'weak' || safeLevel === 'yeu' || safeLevel === 'yếu') {
     return 'Weak';
   }
 
@@ -170,7 +170,7 @@ const buildRecommendation = (skillScores) => {
 };
 
 const normalizeStudent = (student) => {
-  const rawScore = Number(student.score ?? student.result ?? 0);
+  const rawScore = Number(student.score ?? student.result ?? student.totalScore ?? 0);
   const candidateScores = SKILL_CONFIG.reduce((acc, skill) => {
     acc[skill.key] = getSkillFromPayload(student, skill.key);
     return acc;
@@ -191,7 +191,7 @@ const normalizeStudent = (student) => {
     id: student.id || student.studentId || `${student.name || student.studentName || 'student'}-${rawScore}`,
     name: student.name || student.studentName || 'Khong ro',
     score: rawScore,
-    level: normalizeLevel(student.level),
+    level: normalizeLevel(student.level ?? student.rank),
     skillScores: computedScores,
     softSkillIndex: buildSoftSkillIndex(computedScores),
     recommendation: buildRecommendation(computedScores),

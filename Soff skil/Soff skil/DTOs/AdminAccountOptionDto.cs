@@ -6,6 +6,7 @@ public class AdminAccountOptionDto
     public string Name { get; set; } = string.Empty;
     public string Username { get; set; } = string.Empty;
     public string? Email { get; set; }
+    public int? TeacherId { get; set; }
     public string? ClassCode { get; set; }
     public string? ClassName { get; set; }
     public string? TeacherName { get; set; }
